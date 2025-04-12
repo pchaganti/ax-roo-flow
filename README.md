@@ -66,13 +66,27 @@ flowchart LR
    3.  **Open your terminal** and navigate (`cd`) to your project's **root directory**.
    4.  **Run the appropriate command** for your operating system directly:
        *   **Windows (Command Prompt or PowerShell):**
-           ```cmd
-           curl -L https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.cmd | cmd
-           ```
+           1. Download the script:
+              ```cmd
+              curl -L -o install_rooflow.cmd https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.cmd
+              ```
+           2. Execute the downloaded script:
+              ```cmd
+              .\install_rooflow.cmd
+              ```
        *   **Linux / macOS (bash/zsh):**
-           ```bash
-           curl -L https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.sh | bash
-           ```
+           1. Download the script:
+              ```bash
+              curl -L -o install_rooflow.sh https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.sh
+              ```
+           2. Make the script executable:
+              ```bash
+              chmod +x install_rooflow.sh
+              ```
+           3. Execute the downloaded script:
+              ```bash
+              ./install_rooflow.sh
+              ```
    5.  The command downloads and executes the script, which will check for `git`, clone the repository, move files, clean up, and run the variable insertion process. Follow any on-screen prompts or error messages.
    6.  **Note:** Upon successful completion, the downloaded scripts (`install_rooflow.*` and `insert-variables.*`) will be automatically removed.
 
