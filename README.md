@@ -810,6 +810,8 @@ umb:
    4.  **Memory Bank Initialization:**  If you start a chat in a project *without* a `memory-bank/` directory, Roo will suggest switching to Architect mode and guide you through the initialization process.
    5. **"Update Memory Bank" Command:** At any time, you can type "Update Memory Bank" or "UMB" to force a synchronization of the chat session's information into the Memory Bank. This is useful for ensuring continuity across sessions or before switching modes.
 
+   <br>
+
    ### 3. Updating RooFlow
 
    #### Simply run the install script and it will overwrite your existing .roo/ directory and .roomodes file.
