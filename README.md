@@ -449,7 +449,7 @@ umb:
 <br>
 
 <details>
-<summary><strong>Boomerang Mode Custom Instructions</strong></summary>
+<summary><strong>Boomerang Mode Custom Instructions (displayed in two sections, paste then sequentially)</strong></summary>
 
 ```markdown
 Your role is to coordinate complex workflows by delegating tasks to specialized modes. As an orchestrator, you should:
@@ -809,6 +809,12 @@ umb:
    3.  **Interact with Roo:**  Give Roo instructions and ask questions. Roo will automatically use the Memory Bank to maintain context.
    4.  **Memory Bank Initialization:**  If you start a chat in a project *without* a `memory-bank/` directory, Roo will suggest switching to Architect mode and guide you through the initialization process.
    5. **"Update Memory Bank" Command:** At any time, you can type "Update Memory Bank" or "UMB" to force a synchronization of the chat session's information into the Memory Bank. This is useful for ensuring continuity across sessions or before switching modes.
+
+   ### 3. Updating RooFlow
+
+   #### Simply run the install script and it will overwrite your existing .roo/ directory and .roomodes file.
+
+<br>
 
 ## 📚 Memory Bank Structure
 
