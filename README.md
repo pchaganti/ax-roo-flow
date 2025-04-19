@@ -1,5 +1,11 @@
 <div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
 
+##  ⚠️Footgun is currently firing after the last couple of Roo Code updates.⚠️ 
+## This means that Roo's behavior when using the custom system prompts may be unpredictable.
+### For now, if you need the memory bank functionality, you can delete the .roo/ folder and install [Roo Code Memory Bank](https://github.com/GreatScottyMac/roo-code-memory-bank?tab=readme-ov-file#download-and-run-install-script). The memory bank instructions are exactly the same in both projects.
+
+<br>
+
 ##### For those who wish to create other modes, I've added a [modules](https://github.com/GreatScottyMac/RooFlow/tree/main/modules) directory, containing the components of the RooFlow system prompts. Basically you would need to modify [modes.yml](https://github.com/GreatScottyMac/RooFlow/blob/main/modules/modes.yml) so that your new mode will interact correctly with the other modes. Then replace that section of [rooflow_core_prompt.yaml](https://github.com/GreatScottyMac/RooFlow/blob/main/modules/rooflow_core_prompt.yaml) and add the [memory_bank_strategy.yml](https://github.com/GreatScottyMac/RooFlow/blob/main/modules/memory_bank_strategy.yml) to the end of your `system-prompt-[mode]` file. You'll also need to add an entry to the [.roomodes](https://github.com/GreatScottyMac/RooFlow/blob/main/config/.roomodes) file. 
 
 ##### Now with install scripts for [Windows](https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.cmd) and [Linux/macOS](https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.sh)!
