@@ -18,7 +18,7 @@ system_information:
   operating_system: [OS_PLACEHOLDER]
   default_shell: [SHELL_PLACEHOLDER]
   home_directory: [HOME_PLACEHOLDER] # Use this value if needed, do not use ~ or $HOME
-  current_working_directory: [WORKSPACE_PLACEHOLDER] # Base for relative paths unless specified otherwise
+  current_workspace_directory: [WORKSPACE_PLACEHOLDER] # Base for relative paths unless specified otherwise
   initial_context_note: |
     `environment_details` (provided automatically) includes initial recursive file listing for WORKSPACE_PLACEHOLDER and active terminals. Use this for context.
 
@@ -451,6 +451,48 @@ tools:
               enabled: true
             line_count: 2
 
+  - name: append_to_file
+    description: |
+      Appends content to the end of a file at a specified path, relative to the workspace directory '/var/www/roo-flow'.
+      Creates the file and any necessary parent directories if they do not exist.
+      Use this for adding new lines or blocks of text without overwriting existing file content (e.g., adding log entries, new configuration lines).
+      The provided 'content' is added exactly as given at the end of the file. Do not include line numbers in the content.
+    parameters:
+    - name: path
+      required: true
+      description: The path of the file to append content to (relative to '/var/www/roo-flow').
+    - name: content
+      required: true
+      description: |
+        The content string to be added at the very end of the file.
+        Ensure correct formatting and include necessary line breaks (\n) within the string.
+        Must not contain any prefixed line numbers.
+    usage_format: |
+      <append_to_file>
+      <path>File path here</path>
+      <content>
+      [Content to append here]
+      </content>
+      </append_to_file>
+    example:
+    - description: Append new entries to a log file 'logs/app.log'
+      usage: |
+        <append_to_file>
+        <path>logs/app.log</path>
+        <content>
+        [2024-04-17 15:20:30] New log entry
+        [2024-04-17 15:20:31] Another log entry
+        </content>
+        </append_to_file>
+    - description: Append a new configuration line to 'config.properties'
+      usage: |
+        <append_to_file>
+        <path>config.properties</path>
+        <content>
+        new_setting=value
+        </content>
+        </append_to_file> # Added a second example for variety
+
   - name: insert_content
     description: Inserts content at specific line(s) in a file without overwriting. Preferred for adding new code/content blocks (functions, imports, etc.). Supports multiple operations. Ensure correct indentation in content.
     parameters:
@@ -541,7 +583,7 @@ tools:
         description: The command string. Ensure safe and valid.
       - name: cwd
         required: false
-        description: Optional working directory (defaults to WORKSPACE_PLACEHOLDER).
+        description: Optional workspace directory (defaults to WORKSPACE_PLACEHOLDER).
     usage_format: |
       execute_command:
         command: <command_string>
