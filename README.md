@@ -1,6 +1,6 @@
 <div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
 
-# ⚠️Warning: [RooFlow](https://github.com/GreatScottyMac/RooFlow) completely replaces the Roo Code system prompts!⚠️ 
+# ⚠️Warning: [RooFlow](https://github.com/GreatScottyMac/RooFlow) completely replaces the Roo Code system prompts! This project is NOT endorsed or supported by Roo Code in any way!
 ### If Roo is misbehaving with the RooFlow prompts, you can simply delete the .roo/ folder, install [Roo Code Memory Bank](https://github.com/GreatScottyMac/roo-code-memory-bank?tab=readme-ov-file#download-and-run-install-script) and then retry your operation with the standard system prompt. 
 ### The memory bank instructions are exactly the same in both projects and RCMB uses the standard Roo Code system prompts. 
 
