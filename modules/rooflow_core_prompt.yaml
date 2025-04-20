@@ -487,87 +487,6 @@ tools:
         </content>
         </append_to_file> # Added a second example for variety
 
-  - name: insert_content
-    description: Inserts content at specific line(s) in a file without overwriting. Preferred for adding new code/content blocks (functions, imports, etc.). Supports multiple operations. Ensure correct indentation in content.
-    parameters:
-      - name: path
-        required: true
-        description: Relative path to file.
-      - name: operations
-        required: true
-        description: |
-          List of operations. Each operation should have a start_line and content.
-          Content at start_line moves down.
-    usage_format: |
-      insert_content:
-        path: <path>
-        operations:
-          - start_line: <line_num>
-            content: |
-              Inserted content...
-              Indentation matters.
-          - start_line: <other_line_num>
-            content: "Single line insert"
-    examples:
-      - description: Insert import and function
-        yaml_usage: |
-          insert_content:
-            path: main.js
-            operations:
-              - start_line: 1
-                content: "import { helper } from './utils';"
-              - start_line: 10
-                content: |
-                  function newFunc() {
-                    helper();
-                  }
-
-  - name: search_and_replace
-    description: |
-      Performs search (text/regex) and replace operations within a file, optionally restricted by lines. Shows diff preview. Supports multiple operations. Be cautious with patterns. CRITICAL: The 'operations' parameter MUST be a valid JSON string starting with '[' and ending with ']'. Ensure all numbers are correctly formatted (e.g., no leading hyphens unless part of a valid negative number like -10). Do not include diff markers or other non-JSON text directly in the JSON string.
-    parameters:
-      - name: path
-        required: true
-        description: Relative path to file.
-      - name: operations
-        required: true
-        description: |
-          JSON string representing a list of search/replace operation objects. Each object can have these keys:
-          - search: pattern to find
-          - replace: replacement text
-          - start_line: (optional) beginning line number
-          - end_line: (optional) ending line number
-          - use_regex: (optional) use regex pattern
-          - ignore_case: (optional) case-insensitive search
-          - regex_flags: (optional) regex pattern flags
-    usage_format: |
-      search_and_replace:
-        path: <path>
-        operations: |
-          [
-            {
-              "search": "<pattern>",
-              "replace": "<replacement>",
-              "start_line": <optional_num>,
-              "end_line": <optional_num>,
-              "use_regex": <optional_bool>
-            }
-          ]
-    examples:
-      - description: Replace 'var' with 'let' in JS file (lines 1-50)
-        yaml_usage: | # Note: Example shows JSON string within YAML
-          search_and_replace:
-            path: script.js
-            operations: |
-              [
-                {
-                  "search": "var ",
-                  "replace": "let ",
-                  "start_line": 1,
-                  "end_line": 50
-                }
-              ]
-
   # --- Execution & Interaction ---
   - name: execute_command
     description: Executes a CLI command in a new terminal instance. Explain purpose. Tailor to OS/Shell. Use `cd <dir> && command` for specific CWD. Interactive/long-running OK. Assume success if no output unless output is critical.
@@ -702,7 +621,7 @@ rules: # Using map format for rules now
     description: Use tools (incl MCP ops) one at a time. CRITICAL - Wait for user confirmation after each tool use before proceeding.
   R03_EditingToolPreference:
     description: |
-      Prefer `apply_diff` (line changes), `insert_content` (adding blocks), `search_and_replace` (text/regex replace) over `write_to_file` for existing files (faster, better for large files).
+      Prefer `apply_diff` (line changes), over `write_to_file` for existing files (faster, better for large files).
       Use `write_to_file` for new files or complete overwrites ONLY.
   R04_WriteFileCompleteness:
     description: CRITICAL write_to_file rule - ALWAYS provide COMPLETE file content. No partial updates or placeholders. Include ALL parts.
