@@ -2,7 +2,7 @@
 
 ##  ⚠️Footgun is currently firing after the last couple of Roo Code updates.⚠️ 
 ## This means that Roo's behavior when using the custom system prompts may be unpredictable.
-### For now, if you need the memory bank functionality, you can delete the .roo/ folder and install [Roo Code Memory Bank](https://github.com/GreatScottyMac/roo-code-memory-bank?tab=readme-ov-file#download-and-run-install-script). The memory bank instructions are exactly the same in both projects.
+### For now, if Roo is misbehaving with the RooFlow prompts, you can delete the .roo/ folder and install [Roo Code Memory Bank](https://github.com/GreatScottyMac/roo-code-memory-bank?tab=readme-ov-file#download-and-run-install-script). The memory bank instructions are exactly the same in both projects and RCMB uses the standard Roo Code system prompts. 
 
 <br>
 
