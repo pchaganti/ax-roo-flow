@@ -4,13 +4,16 @@
 
 <br>
 
-##### For those who wish to create other modes, I've added a [modules](https://github.com/GreatScottyMac/RooFlow/tree/main/modules) directory, containing the components of the RooFlow system prompts. Basically you would need to modify [modes.yml](https://github.com/GreatScottyMac/RooFlow/blob/main/modules/modes.yml) so that your new mode will interact correctly with the other modes. Then replace that section of [rooflow_core_prompt.yaml](https://github.com/GreatScottyMac/RooFlow/blob/main/modules/rooflow_core_prompt.yaml) and add the [memory_bank_strategy.yml](https://github.com/GreatScottyMac/RooFlow/blob/main/modules/memory_bank_strategy.yml) to the end of your `system-prompt-[mode]` file. You'll also need to add an entry to the [.roomodes](https://github.com/GreatScottyMac/RooFlow/blob/main/config/.roomodes) file. 
+## RooFlow v0.4.0
 
-##### Now with install scripts for [Windows](https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.cmd) and [Linux/macOS](https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.sh)!
+* **RooFlow is now installed alongside the standard Roo Code modes, as Flow-Architect, Flow-Code, Flow-Debug , and Flow-Ask.**
+* **Now you can easily switch to a standard Roo Code mode if something is not working correctly with a RooFlow mode.**
+* **In order to retain memory bank functionality when working with a standard Roo Code mode, simply copy/paste the corresponding [memory bank instructions](https://github.com/GreatScottyMac/RooFlow/tree/main/modules) into the Mode-specific Custom Instructions box for each mode:**
 
-##### [Boomerang Mode](https://github.com/GreatScottyMac/RooFlow#install-global-default-and-boomerang-modes) is available for manual installation.
+<br>
 
-##### For MCP server use in RooFlow custom modes, there is a `MCP_SERVERS_PLACEHOLDER` in the `system-prompt-[mode]` files where connected MCP servers will need to be inserted.
+   <img src="https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/images/Mode-specific%20Custom%20Instructions.png" alt="RooFlow Logo" width="300"/>
+
 </div>
 
 <div align="center">
