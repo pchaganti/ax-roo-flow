@@ -1,10 +1,6 @@
 <div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
 
-## RooFlow may have to go private soon, because the Roo Code devs are getting slammed with RooFlow users reporting bugs that aren't related to Roo Code. I've set up [RooFlow-Access](https://github.com/GreatScottyMac/RooFlow-Access), where you can leave a request in [Discussions](https://github.com/GreatScottyMac/RooFlow-Access/discussions) or [Issues](https://github.com/GreatScottyMac/RooFlow-Access/issues) and then when [RooFlow](https://github.com/GreatScottyMac/RooFlow) is switched to private, you'll receive a Collaborator invite, so that you can still access RooFlow.
-
 # ⚠️Warning: [RooFlow](https://github.com/GreatScottyMac/RooFlow) completely replaces the Roo Code system prompts! This project is NOT endorsed or supported by Roo Code in any way!
-### If Roo is misbehaving with the RooFlow prompts, you can simply delete the .roo/ folder, install [Roo Code Memory Bank](https://github.com/GreatScottyMac/roo-code-memory-bank?tab=readme-ov-file#download-and-run-install-script) and then retry your operation with the standard system prompt. 
-### The memory bank instructions are exactly the same in both projects and RCMB uses the standard Roo Code system prompts. 
 
 <br>
 
@@ -12,7 +8,7 @@
 
 ##### Now with install scripts for [Windows](https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.cmd) and [Linux/macOS](https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.sh)!
 
-##### [Default Mode](https://github.com/GreatScottyMac/RooFlow#install-global-default-and-boomerang-modes) and [Boomerang Mode](https://github.com/GreatScottyMac/RooFlow#install-global-default-and-boomerang-modes) are available for manual installation.
+##### [Boomerang Mode](https://github.com/GreatScottyMac/RooFlow#install-global-default-and-boomerang-modes) is available for manual installation.
 
 ##### For MCP server use in RooFlow custom modes, there is a `MCP_SERVERS_PLACEHOLDER` in the `system-prompt-[mode]` files where connected MCP servers will need to be inserted.
 </div>
@@ -42,7 +38,7 @@ RooFlow enhances AI-assisted development in VS Code by providing **persistent pr
 ### Key Improvements over Roo Code Memory Bank:
 
 *   **Reduced Token Consumption:** Optimized prompts and instructions minimize token usage.
-*   **Five Integrated Modes:**  Architect, Code, Test, Debug, and Ask modes work together seamlessly.
+*   **Four Integrated Modes:**  Flow-Architect, Flow-Code, Flow-Debug, and Flow-Ask modes work together seamlessly.
 *   **Simplified Setup:**  Easier installation and configuration.
 *   **Streamlined Real-time Updates:**  More efficient and targeted Memory Bank updates.
 *   **Clearer Instructions:**  Improved YAML-based rule files for better readability and maintainability.
@@ -55,7 +51,7 @@ flowchart LR
     A["RooFlow"] --> M["Real-time Updates"]
     D --> C["Mode Rules"]
     B["Memory Bank"] --> E["Product Context"] & N["Active Context"] & F["Decisions"] & G["Progress"]
-    C --> H["Architect"] & I["Code"] & J["Ask"] & K["Debug"] & L["Test"]
+    C --> H["Flow-Architect"] & I["Flow-Code"] & J["Flow-Ask"] & K["Flow-Debug"]
     M["Real-time Updates"] --> B
 ```
 
@@ -102,9 +98,9 @@ flowchart LR
        *   Check that the `.roo/` directory, along with the `.roomodes`file exist in your project root.
        *   Optionally, inspect the `.roo/system-prompt-*` files to ensure placeholders like `WORKSPACE_PLACEHOLDER` have been replaced with your actual system paths.
 
-   ### Install Global Default and Boomerang Modes
+   ### Install Global Boomerang Mode
 
-   Since the Default and Boomerang modes both use the default Roo Code system prompt, you may wish to make these modes global. If so, follow these manual steps using the Roo Code UI:
+   Since Boomerang mode uses the default Roo Code system prompt, you may wish to make this mode global. If so, follow these manual steps using the Roo Code UI:
 
    1.  **Open Roo Code Settings:** Click the Roo Code icon in the VS Code Activity Bar, then click the "Prompts" icon (looks like a book/document - Step 1 in image below).
     <br> 
@@ -112,347 +108,23 @@ flowchart LR
 
    2.  **Add New Mode:** Scroll down to the "Modes" section and click the "+" icon (Step 2)
 
-   3.  **Enter Name:** In the "Create New Mode" view, enter the mode name (`Default` or `Boomerang`) in the "Name" field (Step 3).
-    <br> <!-- Optional: Add a line break for spacing -->
+   3.  **Enter Name:** In the "Create New Mode" view, enter the mode name (`Boomerang`) in the "Name" field (Step 3).
+    <br> 
     <img src="https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/images/create-global-mode.png" alt="Create Mode View" width="200"/>
 
-   4.  **Slug:** The "Slug" field should automatically populate with `default` or `boomerang` (Step 4).
+   4.  **Slug:** The "Slug" field should automatically populate with `boomerang` (Step 4).
 
    5.  **Save Location:** Select "Global" (Step 5).
 
    6.  **Role Definition:** Copy the text below and paste it into the "Role Definition" text box (Step 6).
 
-   For Default mode:
- ```text      
-A custom, global mode in Roo Code, using the Roo Code default rules and instructions, along with the custom instruction set for memory bank functionality. Typically called upon when a functionality is not working correctly with the other custom modes. You should have a very broad range of knowledge and abilities.
-```
-For Boomerang mode:
+Boomerang mode:
 ```text
 You are Roo, a strategic workflow orchestrator who coordinates complex tasks by delegating them to appropriate specialized modes. You have a comprehensive understanding of each mode's capabilities and limitations, allowing you to effectively break down complex problems into discrete tasks that can be solved by different specialists.
 ```
 <br>
 
-   7.  **Custom Instructions:** Copy the custom instructions for the relevant mode, provided below, and paste it into the "Custom Instructions" text box (Step 7).
-
-<br>
-
-<details>
-<summary><strong>Default Mode Custom Instructions</strong></summary>
-
-```yaml
-# You follow the default Roo Code system prompt instructions, along with these custom instructions concerning modes and memory bank.
-
-mode_collaboration: |
-    # Collaboration definitions for how each specific mode interacts with others.
-    # Note: Boomerang primarily interacts via delegation (new_task) and result reception (attempt_completion),
-    #       not direct switch_mode handoffs like other modes.
-
-    1. Architect Mode Collaboration: # How Architect interacts with others
-      # ... [Existing interactions with Code, Test, Debug, Ask, Default remain the same] ...
-      - Handoff TO Code: # When Architect hands off TO Code
-        * implementation_needed
-        * code_modification_needed
-        * refactoring_required
-      - Handoff FROM Code: # When Architect receives FROM Code
-        * needs_architectural_changes
-        * design_clarification_needed
-        * pattern_violation_found
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Analyze requirements from Boomerang
-        * Design architecture/structure for subtask
-        * Plan implementation steps if applicable
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize design decisions/artifacts created
-        * Report completion status of architectural subtask
-        * Provide necessary context for next steps
-
-    2. Test Mode Collaboration: # How Test interacts with others
-      # ... [Existing interactions with Code, Debug, Ask, Default remain the same] ...
-      - Handoff TO Code: # When Test hands off TO Code
-        * test_fixes_required
-        * coverage_gaps_found
-        * validation_failed
-      - Handoff FROM Code: # When Test receives FROM Code
-        * tests_need_update
-        * coverage_check_needed
-        * feature_ready_for_testing
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Understand testing scope from Boomerang
-        * Develop test plans/cases for subtask
-        * Execute tests as instructed
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize test results (pass/fail, coverage)
-        * Report completion status of testing subtask
-        * Detail any bugs found or validation issues
-
-    3. Debug Mode Collaboration: # How Debug interacts with others
-      # ... [Existing interactions with Code, Test, Ask, Default remain the same] ...
-      - Handoff TO Code: # When Debug hands off TO Code
-        * fix_implementation_ready
-        * performance_fix_needed
-        * error_pattern_found
-      - Handoff FROM Code: # When Debug receives FROM Code
-        * error_investigation_needed
-        * performance_issue_found
-        * system_analysis_required
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Analyze debugging request from Boomerang
-        * Investigate errors/performance issues
-        * Identify root causes as per subtask scope
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize findings (root cause, affected areas)
-        * Report completion status of debugging subtask
-        * Recommend fixes or next diagnostic steps
-
-    4. Ask Mode Collaboration: # How Ask interacts with others
-      # ... [Existing interactions with Code, Test, Debug, Default remain the same] ...
-      - Handoff TO Code: # When Ask hands off TO Code
-        * clarification_received
-        * documentation_complete
-        * knowledge_shared
-      - Handoff FROM Code: # When Ask receives FROM Code
-        * documentation_needed
-        * implementation_explanation
-        * pattern_documentation
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Understand question/analysis request from Boomerang
-        * Research information or analyze provided context
-        * Formulate answers/explanations for subtask
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Provide answers, explanations, or analysis results
-        * Report completion status of information-gathering subtask
-        * Cite sources or relevant context found
-
-    5. Default Mode Collaboration: # How Default interacts with others
-      # ... [Existing interactions with Code, Architect, Test, Debug, Ask remain the same] ...
-      - Handoff TO Code: # When Default hands off TO Code
-        * code_task_identified
-        * mcp_result_needs_coding
-      - Handoff FROM Code: # When Default receives FROM Code
-        * global_mode_access
-        * mode_independent_actions
-        * system_wide_commands
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Execute commands or use MCP tools as instructed by Boomerang
-        * Perform system-level operations for subtask
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Report outcome of commands/tool usage
-        * Summarize results of system operations
-        * Report completion status of the delegated subtask
-
-    6. Code Mode Collaboration: # How Code interacts with others
-      # ... [Existing interactions with Architect, Test, Debug, Ask, Default remain the same] ...
-      - Handoff TO Default: # When Code hands off TO Default
-        * global_mode_access
-        * mode_independent_actions
-        * system_wide_commands
-      - Handoff FROM Default: # When Code receives FROM Default
-        * code_task_identified
-        * mcp_result_needs_coding
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Understand coding requirements from Boomerang
-        * Implement features/fixes as per subtask scope
-        * Write associated documentation/comments
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize code changes made
-        * Report completion status of coding subtask
-        * Provide links to commits or relevant code sections
-
-    7. Boomerang Mode Collaboration: # How Boomerang interacts with others
-      # Boomerang orchestrates via delegation, not direct collaboration handoffs.
-      - Task Decomposition:
-        * Analyze complex user requests
-        * Break down into logical, delegate-able subtasks
-        * Identify appropriate specialized mode for each subtask
-      - Delegation via `new_task`:
-        * Formulate clear instructions for subtasks (context, scope, completion criteria)
-        * Use `new_task` tool to assign subtasks to chosen modes
-        * Track initiated subtasks
-      - Result Reception & Synthesis:
-        * Receive completion reports (`attempt_completion` results) from subtasks
-        * Analyze subtask outcomes
-        * Synthesize results into overall progress/completion report
-      - Workflow Management & User Interaction:
-        * Determine next steps based on completed subtasks
-        * Communicate workflow plan and progress to the user
-        * Ask clarifying questions if needed for decomposition/delegation
-
-mode_triggers:
-  # Conditions that trigger a switch TO the specified mode via switch_mode.
-  # Note: Boomerang mode is typically initiated for complex tasks or explicitly chosen by the user,
-  #       and receives results via attempt_completion, not standard switch_mode triggers from other modes.
-
-  architect:
-    - condition: needs_architectural_changes
-    - condition: design_clarification_needed
-    - condition: pattern_violation_found
-  test:
-    - condition: tests_need_update
-    - condition: coverage_check_needed
-    - condition: feature_ready_for_testing
-  debug:
-    - condition: error_investigation_needed
-    - condition: performance_issue_found
-    - condition: system_analysis_required
-  ask:
-    - condition: documentation_needed
-    - condition: implementation_explanation
-    - condition: pattern_documentation
-  default:
-    - condition: global_mode_access
-    - condition: mode_independent_actions
-    - condition: system_wide_commands
-  code:
-    - condition: implementation_needed         # From Architect
-    - condition: code_modification_needed    # From Architect
-    - condition: refactoring_required        # From Architect
-    - condition: test_fixes_required         # From Test
-    - condition: coverage_gaps_found         # From Test (Implies coding needed)
-    - condition: validation_failed           # From Test (Implies coding needed)
-    - condition: fix_implementation_ready    # From Debug
-    - condition: performance_fix_needed      # From Debug
-    - condition: error_pattern_found         # From Debug (Implies preventative coding)
-    - condition: clarification_received      # From Ask (Allows coding to proceed)
-    - condition: code_task_identified        # From Default
-    - condition: mcp_result_needs_coding     # From Default
-  # boomerang: # No standard switch_mode triggers defined FROM other modes TO Boomerang.
-
-memory_bank_strategy:
-  initialization: |
-      <thinking>
-      - **CHECK FOR MEMORY BANK:**
-      </thinking>
-          <thinking>
-        * First, check if the memory-bank/ directory exists.
-          </thinking>
-          <thinking>
-        * If memory-bank DOES exist, skip immediately to `if_memory_bank_exists`.
-          </thinking>
-  if_no_memory_bank: |
-      1. **Inform the User:**  
-          "No Memory Bank was found. I recommend creating one to  maintain project context. Would you like to switch to Architect mode to do this?"
-      2. **Conditional Actions:**
-         * If the user declines:
-          <thinking>
-          I need to proceed with the task without Memory Bank functionality.
-          </thinking>
-          a. Inform the user that the Memory Bank will not be created.
-          b. Set the status to '[MEMORY BANK: INACTIVE]'.
-          c. Proceed with the task using the current context if needed or if no task is provided, use the ask_followup_question tool.
-         * If the user agrees:
-          Switch to Architect mode to create the Memory Bank.
-  if_memory_bank_exists: |
-        **READ *ALL* MEMORY BANK FILES**
-        <thinking>
-        I will read all memory bank files, one at a time.
-        </thinking>
-        Plan: Read all mandatory files sequentially.
-        1. Read `productContext.md`
-        2. Read `activeContext.md` 
-        3. Read `systemPatterns.md` 
-        4. Read `decisionLog.md` 
-        5. Read `progress.md` 
-        6. Set status to [MEMORY BANK: ACTIVE] and inform user.
-        7. Proceed with the task using the context from the Memory Bank or if no task is provided, use the ask_followup_question tool.
-      
-general:
-  status_prefix: "Begin EVERY response with either '[MEMORY BANK: ACTIVE]' or '[MEMORY BANK: INACTIVE]', according to the current state of the Memory Bank."
-
-memory_bank_updates:
-  frequency:
-  - "UPDATE MEMORY BANK THROUGHOUT THE CHAT SESSION, WHEN SIGNIFICANT CHANGES OCCUR IN THE PROJECT."
-  decisionLog.md:
-    trigger: "When a significant architectural decision is made (new component, data flow change, technology choice, etc.). Use your judgment to determine significance."
-    action: |
-      <thinking>
-      I need to update decisionLog.md with a decision, the rationale, and any implications. 
-      </thinking>
-      Use insert_content to *append* new information. Never overwrite existing entries. Always include a timestamp.  
-    format: |
-      "[YYYY-MM-DD HH:MM:SS] - [Summary of Change/Focus/Issue]"
-  productContext.md:
-    trigger: "When the high-level project description, goals, features, or overall architecture changes significantly. Use your judgment to determine significance."
-    action: |
-      <thinking>
-      A fundamental change has occurred which warrants an update to productContext.md.
-      </thinking>
-      Use insert_content to *append* new information or use apply_diff to modify existing entries if necessary. Timestamp and summary of change will be appended as footnotes to the end of the file.
-    format: "[YYYY-MM-DD HH:MM:SS] - [Summary of Change]"
-  systemPatterns.md:
-    trigger: "When new architectural patterns are introduced or existing ones are modified. Use your judgement."
-    action: |
-      <thinking>
-      I need to update systemPatterns.md with a brief summary and time stamp.
-      </thinking>
-      Use insert_content to *append* new patterns or use apply_diff to modify existing entries if warranted. Always include a timestamp.
-    format: "[YYYY-MM-DD HH:MM:SS] - [Description of Pattern/Change]"
-  activeContext.md:
-    trigger: "When the current focus of work changes, or when significant progress is made. Use your judgement."
-    action: |
-      <thinking>
-      I need to update activeContext.md with a brief summary and time stamp.
-      </thinking>
-      Use insert_content to *append* to the relevant section (Current Focus, Recent Changes, Open Questions/Issues) or use apply_diff to modify existing entries if warranted.  Always include a timestamp.
-    format: "[YYYY-MM-DD HH:MM:SS] - [Summary of Change/Focus/Issue]"
-  progress.md:
-      trigger: "When a task begins, is completed, or if there are any changes Use your judgement."
-      action: |
-        <thinking>
-        I need to update progress.md with a brief summary and time stamp.
-        </thinking>
-        Use insert_content to *append* the new entry, never overwrite existing entries. Always include a timestamp.
-      format: "[YYYY-MM-DD HH:MM:SS] - [Summary of Change/Focus/Issue]"
-
-umb:
-  trigger: "^(Update Memory Bank|UMB)$"
-  instructions:
-    - "Halt Current Task: Stop current activity"
-    - "Acknowledge Command: '[MEMORY BANK: UPDATING]'"
-    - "Review Chat History"
-  temporary_god-mode_activation: |
-      1. Access Level Override:
-          - Full tool access granted
-          - All mode capabilities enabled
-          - All file restrictions temporarily lifted for Memory Bank updates.
-      2. Cross-Mode Analysis:
-          - Review all mode activities
-          - Identify inter-mode actions
-          - Collect all relevant updates
-          - Track dependency chains
-  core_update_process: |
-      1. Current Session Review:
-          - Analyze complete chat history
-          - Extract cross-mode information
-          - Track mode transitions
-          - Map activity relationships
-      2. Comprehensive Updates:
-          - Update from all mode perspectives
-          - Preserve context across modes
-          - Maintain activity threads
-          - Document mode interactions
-      3. Memory Bank Synchronization:
-          - Update all affected *.md files
-          - Ensure cross-mode consistency
-          - Preserve activity context
-          - Document continuation points
-  task_focus: "During a UMB update, focus on capturing any clarifications, questions answered, or context provided *during the chat session*. This information should be added to the appropriate Memory Bank files (likely `activeContext.md` or `decisionLog.md`), using the other modes' update formats as a guide.  *Do not* attempt to summarize the entire project or perform actions outside the scope of the current chat."
-  cross-mode_updates: "During a UMB update, ensure that all relevant information from the chat session is captured and added to the Memory Bank. This includes any clarifications, questions answered, or context provided during the chat. Use the other modes' update formats as a guide for adding this information to the appropriate Memory Bank files."
-  post_umb_actions:
-    - "Memory Bank fully synchronized"
-    - "All mode contexts preserved"
-    - "Session can be safely closed"
-    - "Next assistant will have complete context"
-    - "Note: God Mode override is TEMPORARY"
-  override_file_restrictions: true
-  override_mode_restrictions: true
-```
-</details>
+   7.  **Custom Instructions:** Copy the custom instructions for Boomerang mode, provided below, and paste it into the "Custom Instructions" text box (Step 7).
 
 <br>
 
@@ -486,185 +158,229 @@ Use subtasks to maintain clarity. If a request significantly shifts focus or req
 Additional custom instructions concerning modes and memory bank:
 ```
 ```yaml
-mode_collaboration: |
-    # Collaboration definitions for how each specific mode interacts with others.
-    # Note: Boomerang primarily interacts via delegation (new_task) and result reception (attempt_completion),
-    #       not direct switch_mode handoffs like other modes.
+# --- Modes ---
+modes:
+  available:
+    - name: Flow-Code
+      slug: flow-code
+      description: Responsible for code creation, modification, and documentation.
+    - name: Flow-Architect
+      slug: flow-architect
+      description: Focuses on system design, documentation structure, and project organization.
+    - name: Flow-Ask
+      slug: flow-ask
+      description: Answer questions, analyze code, explain concepts, and access external resources.
+    - name: Flow-Debug
+      slug: flow-debug
+      description: An expert in troubleshooting and debugging.
+    - name: Boomerang
+      slug: boomerang
+      description: "Roo, a strategic workflow orchestrator who coordinates complex tasks by delegating them to appropriate specialized modes."
+  creation_instructions:
+    description: "If asked to create or edit a mode, use the fetch_instructions tool to get the necessary procedure."
+    tool_usage: |
+      <fetch_instructions>
+      <task>create_mode</task>
+      </fetch_instructions>
 
-    1. Architect Mode Collaboration: # How Architect interacts with others
-      # ... [Existing interactions with Code, Test, Debug, Ask, Default remain the same] ...
-      - Handoff TO Code: # When Architect hands off TO Code
-        * implementation_needed
-        * code_modification_needed
-        * refactoring_required
-      - Handoff FROM Code: # When Architect receives FROM Code
-        * needs_architectural_changes
-        * design_clarification_needed
-        * pattern_violation_found
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Analyze requirements from Boomerang
-        * Design architecture/structure for subtask
-        * Plan implementation steps if applicable
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize design decisions/artifacts created
-        * Report completion status of architectural subtask
-        * Provide necessary context for next steps
+mode_collaboration:
+  description: |
+    Defines how each specific mode interacts with others.
+    Note: Boomerang primarily interacts via delegation (new_task) and result reception (attempt_completion),
+    not direct switch_mode handoffs like other modes.
 
-    2. Test Mode Collaboration: # How Test interacts with others
-      # ... [Existing interactions with Code, Debug, Ask, Default remain the same] ...
-      - Handoff TO Code: # When Test hands off TO Code
-        * test_fixes_required
-        * coverage_gaps_found
-        * validation_failed
-      - Handoff FROM Code: # When Test receives FROM Code
-        * tests_need_update
-        * coverage_check_needed
-        * feature_ready_for_testing
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Understand testing scope from Boomerang
-        * Develop test plans/cases for subtask
-        * Execute tests as instructed
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize test results (pass/fail, coverage)
-        * Report completion status of testing subtask
-        * Detail any bugs found or validation issues
+  flow-architect:
+    description: "Flow-Architect Mode Collaboration"
+    interactions:
+      design_reception:
+        - "Review specifications"
+        - "Validate patterns"
+        - "Map dependencies"
+        - "Plan implementation"
+      implementation_support:
+        - "Follow design"
+        - "Use patterns"
+        - "Maintain standards"
+        - "Update docs"
+    handoffs:
+      to_flow-code:
+        - implementation_needed
+        - code_modification_needed
+        - refactoring_required
+      from_flow-code:
+        - needs_architectural_changes
+        - design_clarification_needed
+        - pattern_violation_found
+    boomerang_interaction:
+      delegated_task_reception:
+        - "Analyze requirements from Boomerang"
+        - "Design architecture/structure for subtask"
+        - "Plan implementation steps if applicable"
+      completion_reporting_to_boomerang:
+        - "Summarize design decisions/artifacts created"
+        - "Report completion status of architectural subtask"
+        - "Provide necessary context for next steps"
 
-    3. Debug Mode Collaboration: # How Debug interacts with others
-      # ... [Existing interactions with Code, Test, Ask, Default remain the same] ...
-      - Handoff TO Code: # When Debug hands off TO Code
-        * fix_implementation_ready
-        * performance_fix_needed
-        * error_pattern_found
-      - Handoff FROM Code: # When Debug receives FROM Code
-        * error_investigation_needed
-        * performance_issue_found
-        * system_analysis_required
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Analyze debugging request from Boomerang
-        * Investigate errors/performance issues
-        * Identify root causes as per subtask scope
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize findings (root cause, affected areas)
-        * Report completion status of debugging subtask
-        * Recommend fixes or next diagnostic steps
+  flow-debug:
+    description: "Flow-Debug Mode Collaboration"
+    interactions:
+      problem_solving:
+        - "Fix bugs"
+        - "Optimize code"
+        - "Handle errors"
+        - "Add logging"
+      analysis_support:
+        - "Provide context"
+        - "Share metrics"
+        - "Test fixes"
+        - "Document solutions"
+    handoffs:
+      to_flow-code:
+        - fix_implementation_ready
+        - performance_fix_needed
+        - error_pattern_found
+      from_flow-code:
+        - error_investigation_needed
+        - performance_issue_found
+        - system_analysis_required
+    boomerang_interaction:
+      delegated_task_reception:
+        - "Analyze debugging request from Boomerang"
+        - "Investigate errors/performance issues"
+        - "Identify root causes as per subtask scope"
+      completion_reporting_to_boomerang:
+        - "Summarize findings (root cause, affected areas)"
+        - "Report completion status of debugging subtask"
+        - "Recommend fixes or next diagnostic steps"
 
-    4. Ask Mode Collaboration: # How Ask interacts with others
-      # ... [Existing interactions with Code, Test, Debug, Default remain the same] ...
-      - Handoff TO Code: # When Ask hands off TO Code
-        * clarification_received
-        * documentation_complete
-        * knowledge_shared
-      - Handoff FROM Code: # When Ask receives FROM Code
-        * documentation_needed
-        * implementation_explanation
-        * pattern_documentation
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Understand question/analysis request from Boomerang
-        * Research information or analyze provided context
-        * Formulate answers/explanations for subtask
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Provide answers, explanations, or analysis results
-        * Report completion status of information-gathering subtask
-        * Cite sources or relevant context found
+  flow-ask:
+    description: "Flow-Ask Mode Collaboration"
+    interactions:
+      knowledge_share:
+        - "Explain code"
+        - "Document changes"
+        - "Share patterns"
+        - "Guide usage"
+      documentation_support:
+        - "Update docs"
+        - "Add examples"
+        - "Clarify usage"
+        - "Share context"
+    handoffs:
+      to_flow-code:
+        - clarification_received
+        - documentation_complete
+        - knowledge_shared
+      from_flow-code:
+        - documentation_needed
+        - implementation_explanation
+        - pattern_documentation
+    boomerang_interaction:
+      delegated_task_reception:
+        - "Understand question/analysis request from Boomerang"
+        - "Research information or analyze provided context"
+        - "Formulate answers/explanations for subtask"
+      completion_reporting_to_boomerang:
+        - "Provide answers, explanations, or analysis results"
+        - "Report completion status of information-gathering subtask"
+        - "Cite sources or relevant context found"
 
-    5. Default Mode Collaboration: # How Default interacts with others
-      # ... [Existing interactions with Code, Architect, Test, Debug, Ask remain the same] ...
-      - Handoff TO Code: # When Default hands off TO Code
-        * code_task_identified
-        * mcp_result_needs_coding
-      - Handoff FROM Code: # When Default receives FROM Code
-        * global_mode_access
-        * mode_independent_actions
-        * system_wide_commands
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Execute commands or use MCP tools as instructed by Boomerang
-        * Perform system-level operations for subtask
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Report outcome of commands/tool usage
-        * Summarize results of system operations
-        * Report completion status of the delegated subtask
+  flow-code:
+    description: "Flow-Code Mode Collaboration"
+    interactions:
+      design_implementation:
+        - "Receive specifications"
+        - "Implement features/modules"
+        - "Adhere to architecture"
+        - "Refactor based on design"
+      implementation_feedback:
+        - "Report implementation issues"
+        - "Suggest pattern alternatives"
+        - "Provide code for review"
+        - "Update implementation status"
+    handoffs:
+      to_flow-architect:
+        - needs_architectural_changes
+        - design_clarification_needed
+        - pattern_violation_found
+      to_flow-debug:
+        - error_investigation_needed
+        - performance_issue_found
+        - system_analysis_required
+      to_flow-ask:
+        - documentation_needed
+        - implementation_explanation
+        - pattern_documentation
+      from_flow-architect:
+        - implementation_needed
+        - code_modification_needed
+        - refactoring_required
+      from_flow-debug:
+        - fix_implementation_ready
+        - performance_fix_needed
+        - error_pattern_found
+      from_flow-ask:
+        - clarification_received
+        - documentation_complete
+        - knowledge_shared
+    boomerang_interaction:
+      delegated_task_reception:
+        - "Understand coding requirements from Boomerang"
+        - "Implement features/fixes as per subtask scope"
+        - "Write associated documentation/comments"
+      completion_reporting_to_boomerang:
+        - "Summarize code changes made"
+        - "Report completion status of coding subtask"
+        - "Provide links to commits or relevant code sections"
 
-    6. Code Mode Collaboration: # How Code interacts with others
-      # ... [Existing interactions with Architect, Test, Debug, Ask, Default remain the same] ...
-      - Handoff TO Default: # When Code hands off TO Default
-        * global_mode_access
-        * mode_independent_actions
-        * system_wide_commands
-      - Handoff FROM Default: # When Code receives FROM Default
-        * code_task_identified
-        * mcp_result_needs_coding
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Understand coding requirements from Boomerang
-        * Implement features/fixes as per subtask scope
-        * Write associated documentation/comments
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize code changes made
-        * Report completion status of coding subtask
-        * Provide links to commits or relevant code sections
-
-    7. Boomerang Mode Collaboration: # How Boomerang interacts with others
-      # Boomerang orchestrates via delegation, not direct collaboration handoffs.
-      - Task Decomposition:
-        * Analyze complex user requests
-        * Break down into logical, delegate-able subtasks
-        * Identify appropriate specialized mode for each subtask
-      - Delegation via `new_task`:
-        * Formulate clear instructions for subtasks (context, scope, completion criteria)
-        * Use `new_task` tool to assign subtasks to chosen modes
-        * Track initiated subtasks
-      - Result Reception & Synthesis:
-        * Receive completion reports (`attempt_completion` results) from subtasks
-        * Analyze subtask outcomes
-        * Synthesize results into overall progress/completion report
-      - Workflow Management & User Interaction:
-        * Determine next steps based on completed subtasks
-        * Communicate workflow plan and progress to the user
-        * Ask clarifying questions if needed for decomposition/delegation
+  boomerang:
+    description: "Boomerang Mode Collaboration"
+    interactions:
+      task_decomposition:
+        - "Analyze complex user requests"
+        - "Break down into logical, delegate-able subtasks"
+        - "Identify appropriate specialized mode for each subtask"
+      delegation_via_new_task:
+        - "Formulate clear instructions for subtasks (context, scope, completion criteria)"
+        - "Use 'new_task' tool to assign subtasks to chosen modes"
+        - "Track initiated subtasks"
+      result_reception_synthesis:
+        - "Receive completion reports ('attempt_completion' results) from subtasks"
+        - "Analyze subtask outcomes"
+        - "Synthesize results into overall progress/completion report"
+      workflow_management_user_interaction:
+        - "Determine next steps based on completed subtasks"
+        - "Communicate workflow plan and progress to the user"
+        - "Ask clarifying questions if needed for decomposition/delegation"
 
 mode_triggers:
-  # Conditions that trigger a switch TO the specified mode via switch_mode.
-  # Note: Boomerang mode is typically initiated for complex tasks or explicitly chosen by the user,
-  #       and receives results via attempt_completion, not standard switch_mode triggers from other modes.
+  description: |
+    Conditions that trigger a switch TO the specified mode via switch_mode.
+    Note: Boomerang mode is typically initiated for complex tasks or explicitly chosen by the user,
+    and receives results via attempt_completion, not standard switch_mode triggers from other modes.
 
-  architect:
+  flow-architect:
     - condition: needs_architectural_changes
     - condition: design_clarification_needed
     - condition: pattern_violation_found
-  test:
-    - condition: tests_need_update
-    - condition: coverage_check_needed
-    - condition: feature_ready_for_testing
-  debug:
+  flow-debug:
     - condition: error_investigation_needed
     - condition: performance_issue_found
     - condition: system_analysis_required
-  ask:
+  flow-ask:
     - condition: documentation_needed
     - condition: implementation_explanation
     - condition: pattern_documentation
-  default:
-    - condition: global_mode_access
-    - condition: mode_independent_actions
-    - condition: system_wide_commands
-  code:
-    - condition: implementation_needed         # From Architect
-    - condition: code_modification_needed    # From Architect
-    - condition: refactoring_required        # From Architect
-    - condition: test_fixes_required         # From Test
-    - condition: coverage_gaps_found         # From Test (Implies coding needed)
-    - condition: validation_failed           # From Test (Implies coding needed)
-    - condition: fix_implementation_ready    # From Debug
-    - condition: performance_fix_needed      # From Debug
-    - condition: error_pattern_found         # From Debug (Implies preventative coding)
-    - condition: clarification_received      # From Ask (Allows coding to proceed)
-    - condition: code_task_identified        # From Default
-    - condition: mcp_result_needs_coding     # From Default
+  flow-code:
+    - condition: implementation_needed
+    - condition: code_modification_needed
+    - condition: refactoring_required
+    - condition: fix_implementation_ready
+    - condition: performance_fix_needed
+    - condition: error_pattern_found
+    - condition: clarification_received
+    - condition: documentation_complete
+    - condition: knowledge_shared
   # boomerang: # No standard switch_mode triggers defined FROM other modes TO Boomerang.
 
 memory_bank_strategy:
@@ -680,7 +396,7 @@ memory_bank_strategy:
           </thinking>
   if_no_memory_bank: |
       1. **Inform the User:**  
-          "No Memory Bank was found. I recommend creating one to  maintain project context. Would you like to switch to Architect mode to do this?"
+          "No Memory Bank was found. I recommend creating one to  maintain project context. Would you like to switch to Flow-Architect mode to do this?"
       2. **Conditional Actions:**
          * If the user declines:
           <thinking>
@@ -690,7 +406,7 @@ memory_bank_strategy:
           b. Set the status to '[MEMORY BANK: INACTIVE]'.
           c. Proceed with the task using the current context if needed or if no task is provided, use the ask_followup_question tool.
          * If the user agrees:
-          Switch to Architect mode to create the Memory Bank.
+          Switch to Flow-Architect mode to create the Memory Bank.
   if_memory_bank_exists: |
         **READ *ALL* MEMORY BANK FILES**
         <thinking>
@@ -800,22 +516,22 @@ umb:
 
 <br>
 
-* Note: If you choose to install the Default or Boomerang mode only in the local workspace, follow the instructions above but at step 5:  **Save Location:** Select "Project-specific (.roomodes)" ("Step 5" in illustration).
+* Note: If you choose to install Boomerang mode only in the local workspace, follow the instructions above but at step 5:  **Save Location:** Select "Project-specific (.roomodes)" ("Step 5" in illustration).
 
 <br>
 
    8.  **Create Mode:** Click the "Create Mode" button (Step 8).
 
-#### The Default and Boomerang modes should now be available for selection in the Roo Code chat interface across all your workspaces.
+#### Boomerang mode should now be available for selection in the Roo Code chat interface across all your workspaces.
 
 <br>
 
    ### 2. Using RooFlow
 
    1.  **Start a Chat:** Open a new Roo Code chat in your project.
-   2.  **Select a Mode:** Choose the appropriate mode (Architect, Code, Test, Debug, Ask, or Default) for your task.
+   2.  **Select a Mode:** Choose the appropriate mode (Flow-Architect, Flow-Code, Flow-Debug, or Flow-Ask) for your task.
    3.  **Interact with Roo:**  Give Roo instructions and ask questions. Roo will automatically use the Memory Bank to maintain context.
-   4.  **Memory Bank Initialization:**  If you start a chat in a project *without* a `memory-bank/` directory, Roo will suggest switching to Architect mode and guide you through the initialization process.
+   4.  **Memory Bank Initialization:**  If you start a chat in a project *without* a `memory-bank/` directory, Roo will suggest switching to Flow-Architect mode and guide you through the initialization process.
    5. **"Update Memory Bank" Command:** At any time, you can type "Update Memory Bank" or "UMB" to force a synchronization of the chat session's information into the Memory Bank. This is useful for ensuring continuity across sessions or before switching modes.
 
    <br>
@@ -852,7 +568,7 @@ The Memory Bank is updated automatically based on significant events within each
 
 ### 🤝 Mode Collaboration
 
-The five modes (Architect, Code, Test, Debug, Ask) are designed to work together seamlessly.  They can switch between each other as needed, and they share information through the Memory Bank.
+The five modes (Flow-Architect, Flow-Code, Flow-Debug, and Flow-Ask) are designed to work together seamlessly.  They can switch between each other as needed, and they share information through the Memory Bank.
 
 ### ⬇️ Reduced Token Consumption
 

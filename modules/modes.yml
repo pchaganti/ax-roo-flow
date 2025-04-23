@@ -1,211 +1,224 @@
 # --- Modes ---
 modes:
   available:
-    - name: Code
-      slug: code
+    - name: Flow-Code
+      slug: flow-code
       description: Responsible for code creation, modification, and documentation.
-    - name: Architect
-      slug: architect
+    - name: Flow-Architect
+      slug: flow-architect
       description: Focuses on system design, documentation structure, and project organization.
-    - name: Ask
-      slug: ask
+    - name: Flow-Ask
+      slug: flow-ask
       description: Answer questions, analyze code, explain concepts, and access external resources.
-    - name: Debug
-      slug: debug
+    - name: Flow-Debug
+      slug: flow-debug
       description: An expert in troubleshooting and debugging.
-    - name: Test
-      slug: test
-      description: Responsible for test-driven development, test execution, and quality assurance.
-    - name: Default
-      slug: default
-      description: "Custom global mode in Roo Code,with access to MCP servers, using default rules/instructions + custom memory bank instructions."
-    - name: Boomerang 
+    - name: Boomerang
       slug: boomerang
       description: "Roo, a strategic workflow orchestrator who coordinates complex tasks by delegating them to appropriate specialized modes."
-  creation_instructions: |
-    If asked to create/edit a mode, use fetch_instructions:
-  usage_format: |
-    <fetch_instructions>
-    <task>create_mode</task>
-    </fetch_instructions>
+  creation_instructions:
+    description: "If asked to create or edit a mode, use the fetch_instructions tool to get the necessary procedure."
+    tool_usage: |
+      <fetch_instructions>
+      <task>create_mode</task>
+      </fetch_instructions>
 
-mode_collaboration: |
-    # Collaboration definitions for how each specific mode interacts with others.
-    # Note: Boomerang primarily interacts via delegation (new_task) and result reception (attempt_completion),
-    #       not direct switch_mode handoffs like other modes.
+mode_collaboration:
+  description: |
+    Defines how each specific mode interacts with others.
+    Note: Boomerang primarily interacts via delegation (new_task) and result reception (attempt_completion),
+    not direct switch_mode handoffs like other modes.
 
-    1. Architect Mode Collaboration: # How Architect interacts with others
-      # ... [Existing interactions with Code, Test, Debug, Ask, Default remain the same] ...
-      - Handoff TO Code: # When Architect hands off TO Code
-        * implementation_needed
-        * code_modification_needed
-        * refactoring_required
-      - Handoff FROM Code: # When Architect receives FROM Code
-        * needs_architectural_changes
-        * design_clarification_needed
-        * pattern_violation_found
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Analyze requirements from Boomerang
-        * Design architecture/structure for subtask
-        * Plan implementation steps if applicable
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize design decisions/artifacts created
-        * Report completion status of architectural subtask
-        * Provide necessary context for next steps
+  flow-architect:
+    description: "Flow-Architect Mode Collaboration"
+    interactions:
+      design_reception:
+        - "Review specifications"
+        - "Validate patterns"
+        - "Map dependencies"
+        - "Plan implementation"
+      implementation_support:
+        - "Follow design"
+        - "Use patterns"
+        - "Maintain standards"
+        - "Update docs"
+    handoffs:
+      to_flow-code:
+        - implementation_needed
+        - code_modification_needed
+        - refactoring_required
+      from_flow-code:
+        - needs_architectural_changes
+        - design_clarification_needed
+        - pattern_violation_found
+    boomerang_interaction:
+      delegated_task_reception:
+        - "Analyze requirements from Boomerang"
+        - "Design architecture/structure for subtask"
+        - "Plan implementation steps if applicable"
+      completion_reporting_to_boomerang:
+        - "Summarize design decisions/artifacts created"
+        - "Report completion status of architectural subtask"
+        - "Provide necessary context for next steps"
 
-    2. Test Mode Collaboration: # How Test interacts with others
-      # ... [Existing interactions with Code, Debug, Ask, Default remain the same] ...
-      - Handoff TO Code: # When Test hands off TO Code
-        * test_fixes_required
-        * coverage_gaps_found
-        * validation_failed
-      - Handoff FROM Code: # When Test receives FROM Code
-        * tests_need_update
-        * coverage_check_needed
-        * feature_ready_for_testing
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Understand testing scope from Boomerang
-        * Develop test plans/cases for subtask
-        * Execute tests as instructed
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize test results (pass/fail, coverage)
-        * Report completion status of testing subtask
-        * Detail any bugs found or validation issues
+  flow-debug:
+    description: "Flow-Debug Mode Collaboration"
+    interactions:
+      problem_solving:
+        - "Fix bugs"
+        - "Optimize code"
+        - "Handle errors"
+        - "Add logging"
+      analysis_support:
+        - "Provide context"
+        - "Share metrics"
+        - "Test fixes"
+        - "Document solutions"
+    handoffs:
+      to_flow-code:
+        - fix_implementation_ready
+        - performance_fix_needed
+        - error_pattern_found
+      from_flow-code:
+        - error_investigation_needed
+        - performance_issue_found
+        - system_analysis_required
+    boomerang_interaction:
+      delegated_task_reception:
+        - "Analyze debugging request from Boomerang"
+        - "Investigate errors/performance issues"
+        - "Identify root causes as per subtask scope"
+      completion_reporting_to_boomerang:
+        - "Summarize findings (root cause, affected areas)"
+        - "Report completion status of debugging subtask"
+        - "Recommend fixes or next diagnostic steps"
 
-    3. Debug Mode Collaboration: # How Debug interacts with others
-      # ... [Existing interactions with Code, Test, Ask, Default remain the same] ...
-      - Handoff TO Code: # When Debug hands off TO Code
-        * fix_implementation_ready
-        * performance_fix_needed
-        * error_pattern_found
-      - Handoff FROM Code: # When Debug receives FROM Code
-        * error_investigation_needed
-        * performance_issue_found
-        * system_analysis_required
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Analyze debugging request from Boomerang
-        * Investigate errors/performance issues
-        * Identify root causes as per subtask scope
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize findings (root cause, affected areas)
-        * Report completion status of debugging subtask
-        * Recommend fixes or next diagnostic steps
+  flow-ask:
+    description: "Flow-Ask Mode Collaboration"
+    interactions:
+      knowledge_share:
+        - "Explain code"
+        - "Document changes"
+        - "Share patterns"
+        - "Guide usage"
+      documentation_support:
+        - "Update docs"
+        - "Add examples"
+        - "Clarify usage"
+        - "Share context"
+    handoffs:
+      to_flow-code:
+        - clarification_received
+        - documentation_complete
+        - knowledge_shared
+      from_flow-code:
+        - documentation_needed
+        - implementation_explanation
+        - pattern_documentation
+    boomerang_interaction:
+      delegated_task_reception:
+        - "Understand question/analysis request from Boomerang"
+        - "Research information or analyze provided context"
+        - "Formulate answers/explanations for subtask"
+      completion_reporting_to_boomerang:
+        - "Provide answers, explanations, or analysis results"
+        - "Report completion status of information-gathering subtask"
+        - "Cite sources or relevant context found"
 
-    4. Ask Mode Collaboration: # How Ask interacts with others
-      # ... [Existing interactions with Code, Test, Debug, Default remain the same] ...
-      - Handoff TO Code: # When Ask hands off TO Code
-        * clarification_received
-        * documentation_complete
-        * knowledge_shared
-      - Handoff FROM Code: # When Ask receives FROM Code
-        * documentation_needed
-        * implementation_explanation
-        * pattern_documentation
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Understand question/analysis request from Boomerang
-        * Research information or analyze provided context
-        * Formulate answers/explanations for subtask
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Provide answers, explanations, or analysis results
-        * Report completion status of information-gathering subtask
-        * Cite sources or relevant context found
+  flow-code:
+    description: "Flow-Code Mode Collaboration"
+    interactions:
+      design_implementation:
+        - "Receive specifications"
+        - "Implement features/modules"
+        - "Adhere to architecture"
+        - "Refactor based on design"
+      implementation_feedback:
+        - "Report implementation issues"
+        - "Suggest pattern alternatives"
+        - "Provide code for review"
+        - "Update implementation status"
+    handoffs:
+      to_flow-architect:
+        - needs_architectural_changes
+        - design_clarification_needed
+        - pattern_violation_found
+      to_flow-debug:
+        - error_investigation_needed
+        - performance_issue_found
+        - system_analysis_required
+      to_flow-ask:
+        - documentation_needed
+        - implementation_explanation
+        - pattern_documentation
+      from_flow-architect:
+        - implementation_needed
+        - code_modification_needed
+        - refactoring_required
+      from_flow-debug:
+        - fix_implementation_ready
+        - performance_fix_needed
+        - error_pattern_found
+      from_flow-ask:
+        - clarification_received
+        - documentation_complete
+        - knowledge_shared
+    boomerang_interaction:
+      delegated_task_reception:
+        - "Understand coding requirements from Boomerang"
+        - "Implement features/fixes as per subtask scope"
+        - "Write associated documentation/comments"
+      completion_reporting_to_boomerang:
+        - "Summarize code changes made"
+        - "Report completion status of coding subtask"
+        - "Provide links to commits or relevant code sections"
 
-    5. Default Mode Collaboration: # How Default interacts with others
-      # ... [Existing interactions with Code, Architect, Test, Debug, Ask remain the same] ...
-      - Handoff TO Code: # When Default hands off TO Code
-        * code_task_identified
-        * mcp_result_needs_coding
-      - Handoff FROM Code: # When Default receives FROM Code
-        * global_mode_access
-        * mode_independent_actions
-        * system_wide_commands
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Execute commands or use MCP tools as instructed by Boomerang
-        * Perform system-level operations for subtask
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Report outcome of commands/tool usage
-        * Summarize results of system operations
-        * Report completion status of the delegated subtask
-
-    6. Code Mode Collaboration: # How Code interacts with others
-      # ... [Existing interactions with Architect, Test, Debug, Ask, Default remain the same] ...
-      - Handoff TO Default: # When Code hands off TO Default
-        * global_mode_access
-        * mode_independent_actions
-        * system_wide_commands
-      - Handoff FROM Default: # When Code receives FROM Default
-        * code_task_identified
-        * mcp_result_needs_coding
-      # Interaction with Boomerang (as a subtask)
-      - Delegated Task Reception: # Receiving tasks FROM Boomerang via new_task
-        * Understand coding requirements from Boomerang
-        * Implement features/fixes as per subtask scope
-        * Write associated documentation/comments
-      - Completion Reporting TO Boomerang: # Reporting results TO Boomerang via attempt_completion
-        * Summarize code changes made
-        * Report completion status of coding subtask
-        * Provide links to commits or relevant code sections
-
-    7. Boomerang Mode Collaboration: # How Boomerang interacts with others
-      # Boomerang orchestrates via delegation, not direct collaboration handoffs.
-      - Task Decomposition:
-        * Analyze complex user requests
-        * Break down into logical, delegate-able subtasks
-        * Identify appropriate specialized mode for each subtask
-      - Delegation via `new_task`:
-        * Formulate clear instructions for subtasks (context, scope, completion criteria)
-        * Use `new_task` tool to assign subtasks to chosen modes
-        * Track initiated subtasks
-      - Result Reception & Synthesis:
-        * Receive completion reports (`attempt_completion` results) from subtasks
-        * Analyze subtask outcomes
-        * Synthesize results into overall progress/completion report
-      - Workflow Management & User Interaction:
-        * Determine next steps based on completed subtasks
-        * Communicate workflow plan and progress to the user
-        * Ask clarifying questions if needed for decomposition/delegation
+  boomerang:
+    description: "Boomerang Mode Collaboration"
+    interactions:
+      task_decomposition:
+        - "Analyze complex user requests"
+        - "Break down into logical, delegate-able subtasks"
+        - "Identify appropriate specialized mode for each subtask"
+      delegation_via_new_task:
+        - "Formulate clear instructions for subtasks (context, scope, completion criteria)"
+        - "Use 'new_task' tool to assign subtasks to chosen modes"
+        - "Track initiated subtasks"
+      result_reception_synthesis:
+        - "Receive completion reports ('attempt_completion' results) from subtasks"
+        - "Analyze subtask outcomes"
+        - "Synthesize results into overall progress/completion report"
+      workflow_management_user_interaction:
+        - "Determine next steps based on completed subtasks"
+        - "Communicate workflow plan and progress to the user"
+        - "Ask clarifying questions if needed for decomposition/delegation"
 
 mode_triggers:
-  # Conditions that trigger a switch TO the specified mode via switch_mode.
-  # Note: Boomerang mode is typically initiated for complex tasks or explicitly chosen by the user,
-  #       and receives results via attempt_completion, not standard switch_mode triggers from other modes.
+  description: |
+    Conditions that trigger a switch TO the specified mode via switch_mode.
+    Note: Boomerang mode is typically initiated for complex tasks or explicitly chosen by the user,
+    and receives results via attempt_completion, not standard switch_mode triggers from other modes.
 
-  architect:
+  flow-architect:
     - condition: needs_architectural_changes
     - condition: design_clarification_needed
     - condition: pattern_violation_found
-  test:
-    - condition: tests_need_update
-    - condition: coverage_check_needed
-    - condition: feature_ready_for_testing
-  debug:
+  flow-debug:
     - condition: error_investigation_needed
     - condition: performance_issue_found
     - condition: system_analysis_required
-  ask:
+  flow-ask:
     - condition: documentation_needed
     - condition: implementation_explanation
     - condition: pattern_documentation
-  default:
-    - condition: global_mode_access
-    - condition: mode_independent_actions
-    - condition: system_wide_commands
-  code:
-    - condition: implementation_needed         # From Architect
-    - condition: code_modification_needed    # From Architect
-    - condition: refactoring_required        # From Architect
-    - condition: test_fixes_required         # From Test
-    - condition: coverage_gaps_found         # From Test (Implies coding needed)
-    - condition: validation_failed           # From Test (Implies coding needed)
-    - condition: fix_implementation_ready    # From Debug
-    - condition: performance_fix_needed      # From Debug
-    - condition: error_pattern_found         # From Debug (Implies preventative coding)
-    - condition: clarification_received      # From Ask (Allows coding to proceed)
-    - condition: code_task_identified        # From Default
-    - condition: mcp_result_needs_coding     # From Default
+  flow-code:
+    - condition: implementation_needed
+    - condition: code_modification_needed
+    - condition: refactoring_required
+    - condition: fix_implementation_ready
+    - condition: performance_fix_needed
+    - condition: error_pattern_found
+    - condition: clarification_received
+    - condition: documentation_complete
+    - condition: knowledge_shared
   # boomerang: # No standard switch_mode triggers defined FROM other modes TO Boomerang.
