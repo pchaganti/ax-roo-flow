@@ -6,7 +6,7 @@ dev/
 node_modules/
 package-lock.json
 package.json
-!config/
+!config/*
 .rooignore
 !config/.rooignore
 .clinerules-default
