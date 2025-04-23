@@ -734,7 +734,7 @@ memory_bank_strategy:
           </thinking>
           a. Inform the user that the Memory Bank will not be created.
           b. Set the status to '[MEMORY BANK: INACTIVE]'.
-          c. Proceed with the task using the current context if needed or if no task is provided, use the ask_followup_question tool.
+          c. Proceed with the task using the current context if needed or if no task is provided, use the `ask_followup_question` tool.
          * If the user agrees:
           Switch to Flow-Architect mode to create the Memory Bank.
   if_memory_bank_exists: |
@@ -749,7 +749,7 @@ memory_bank_strategy:
         4. Read `decisionLog.md` 
         5. Read `progress.md` 
         6. Set status to [MEMORY BANK: ACTIVE] and inform user.
-        7. Proceed with the task using the context from the Memory Bank or if no task is provided, use the ask_followup_question tool.
+        7. Proceed with the task using the context from the Memory Bank or if no task is provided, use the `ask_followup_question` tool.
       
 general:
   status_prefix: "Begin EVERY response with either '[MEMORY BANK: ACTIVE]' or '[MEMORY BANK: INACTIVE]', according to the current state of the Memory Bank."

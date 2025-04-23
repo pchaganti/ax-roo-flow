@@ -744,7 +744,7 @@ memory_bank_strategy:
           </thinking>
           a. Inform the user that the Memory Bank will not be created.
           b. Set the status to '[MEMORY BANK: INACTIVE]'.
-          c. Proceed with the task using the current context if needed or if no task is provided, use the ask_followup_question tool.
+          c. Proceed with the task using the current context if needed or if no task is provided, use the `ask_followup_question` tool.
           * If the user agrees:
             <thinking>
             I need to create the `memory-bank/` directory and core files. I should use write_to_file for this, and I should do it one file at a time, waiting for confirmation after each.  The initial content for each file is defined below. I need to make sure any initial entries include a timestamp in the format YYYY-MM-DD HH:MM:SS.
@@ -765,7 +765,7 @@ memory_bank_strategy:
               e. Create `memory-bank/decisionLog.md` with `initial_content`.
               f. Create `memory-bank/systemPatterns.md` with `initial_content`.
               g. Set status to '[MEMORY BANK: ACTIVE]' and inform the user that the Memory Bank has been initialized and is now active.
-              h. Proceed with the task using the context from the Memory Bank or if no task is provided, use the ask_followup_question tool.
+              h. Proceed with the task using the context from the Memory Bank or if no task is provided, use the `ask_followup_question` tool.
   initial_content:
     productContext.md: |
       # Product Context
@@ -877,7 +877,7 @@ memory_bank_strategy:
         4. Read `decisionLog.md` 
         5. Read `progress.md` 
         6. Set status to [MEMORY BANK: ACTIVE] and inform user.
-        7. Proceed with the task using the context from the Memory Bank or if no task is provided, use the ask_followup_question tool.
+        7. Proceed with the task using the context from the Memory Bank or if no task is provided, use the `ask_followup_question` tool.
       
 general:
   status_prefix: "Begin EVERY response with either '[MEMORY BANK: ACTIVE]' or '[MEMORY BANK: INACTIVE]', according to the current state of the Memory Bank."
