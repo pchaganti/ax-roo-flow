@@ -799,16 +799,6 @@ umb:
     - "Halt Current Task: Stop current activity"
     - "Acknowledge Command: '[MEMORY BANK: UPDATING]'"
     - "Review Chat History"
-  temporary_god-mode_activation: |
-      1. Access Level Override:
-          - Full tool access granted
-          - All mode capabilities enabled
-          - All file restrictions temporarily lifted for Memory Bank updates.
-      2. Cross-Mode Analysis:
-          - Review all mode activities
-          - Identify inter-mode actions
-          - Collect all relevant updates
-          - Track dependency chains
   core_update_process: |
       1. Current Session Review:
           - Analyze complete chat history
@@ -832,6 +822,5 @@ umb:
     - "All mode contexts preserved"
     - "Session can be safely closed"
     - "Next assistant will have complete context"
-    - "Note: God Mode override is TEMPORARY"
   override_file_restrictions: true
   override_mode_restrictions: true
