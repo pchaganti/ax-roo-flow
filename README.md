@@ -15,13 +15,15 @@
 
    <img src="https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/images/Mode-specific%20Custom%20Instructions.png" alt="RooFlow Logo" width="300"/>
 
-<div>
+</div>
 
 <div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
 
 #### Now you will have [Roo Code Memory Bank](https://github.com/GreatScottyMac/roo-code-memory-bank) when running the standard Roo Code modes, along with the experimental RooFlow modes with their custom system prompts, which use the same memory bank instructions. 
 
 </div>
+
+<div align="center">
 
 <br>
 
