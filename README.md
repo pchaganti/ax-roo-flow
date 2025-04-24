@@ -1,25 +1,30 @@
-<div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
+<div align="center">
 
 # ⚠️Warning: The [RooFlow](https://github.com/GreatScottyMac/RooFlow) modes use custom system prompts, which are experimental! This project is NOT endorsed or supported by Roo Code in any way!
 
-<br>
+## RooFlow v0.4.1
+</div>
 
-## RooFlow v0.4.0
+<div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
 
 * **RooFlow is now installed alongside the standard Roo Code modes, as Flow-Architect, Flow-Code, Flow-Debug , and Flow-Ask.**
 * **Now you can easily switch to a standard Roo Code mode if something is not working correctly with a RooFlow mode.**
 * **In order to retain memory bank functionality when working with a standard Roo Code mode, simply copy/paste the corresponding [memory bank instructions](https://github.com/GreatScottyMac/RooFlow/tree/main/modules) into the Mode-specific Custom Instructions box for each mode:**
 
-<br>
+<div align="center">
 
    <img src="https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/images/Mode-specific%20Custom%20Instructions.png" alt="RooFlow Logo" width="300"/>
 
+<div>
+
+<div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
+
+#### Now you will have [Roo Code Memory Bank](https://github.com/GreatScottyMac/roo-code-memory-bank) when running the standard Roo Code modes, along with the experimental RooFlow modes with their custom system prompts, which use the same memory bank instructions. 
+
 </div>
 
-<div align="center">
-
 <br>
-  
+
 ### ☢️☢️☢️ Footgun in Use ☢️☢️☢️
 
 <br>
