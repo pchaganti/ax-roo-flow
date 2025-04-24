@@ -1,6 +1,6 @@
 <div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
 
-# ⚠️Warning: [RooFlow](https://github.com/GreatScottyMac/RooFlow) completely replaces the Roo Code system prompts! This project is NOT endorsed or supported by Roo Code in any way!
+# ⚠️Warning: The [RooFlow](https://github.com/GreatScottyMac/RooFlow) modes use custom system prompts, which are experimental! This project is NOT endorsed or supported by Roo Code in any way!
 
 <br>
 
