@@ -2,7 +2,8 @@
 
 # ⚠️Warning: The [RooFlow](https://github.com/GreatScottyMac/RooFlow) modes use custom system prompts, which are experimental! This project is NOT endorsed or supported by Roo Code in any way!
 
-## RooFlow v0.4.1
+## RooFlow v0.4.2
+**(Updated 04-25-2025: Improved apply_diff tool instructions!)**
 </div>
 
 <div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
