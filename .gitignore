@@ -15,3 +15,5 @@ backup/
 .venv/
 config-old/
 system_prompt.md
+build/*
+dist/
