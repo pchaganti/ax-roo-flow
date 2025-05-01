@@ -720,7 +720,7 @@ mcp_servers_info:
       "- To execute a tool provided by the server: Use the 'use_mcp_tool' tool."
       "- To access a data resource provided by the server: Use the 'access_mcp_resource' tool."
 
-#   [CONNECTED_MCP_SERVERS]
+  # [CONNECTED_MCP_SERVERS]
 
 # Guidance for Creating MCP Servers
 mcp_server_creation_guidance:
