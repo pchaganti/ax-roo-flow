@@ -720,7 +720,21 @@ mcp_servers_info:
       "- To execute a tool provided by the server: Use the 'use_mcp_tool' tool."
       "- To access a data resource provided by the server: Use the 'access_mcp_resource' tool."
 
-      # [Insert_Connected_Servers_Here] # Placeholder for dynamic content
+#   [CONNECTED_MCP_SERVERS]
+
+# Guidance for Creating MCP Servers
+mcp_server_creation_guidance:
+  description: |
+    Guidance for handling user requests to create new MCP servers.
+    If the user asks to "add a tool" or create functionality requiring external interaction (e.g., connecting to an API), this often implies creating a new MCP server.
+    DO NOT attempt to create the server directly.
+    Instead, you MUST obtain detailed instructions on this topic using the 'fetch_instructions' tool.
+  fetch_instructions_usage:
+    description: "Correct usage of fetch_instructions to get server creation steps."
+    tool_usage: |
+      <fetch_instructions>
+      <task>create_mcp_server</task>
+      </fetch_instructions>
 
 # AI Model Capabilities
 capabilities:

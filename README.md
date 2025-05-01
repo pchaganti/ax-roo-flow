@@ -2,8 +2,6 @@
 
 # ⚠️Notice: The [RooFlow](https://github.com/GreatScottyMac/RooFlow) modes use custom system prompts, which are experimental. This project is NOT endorsed or supported by Roo Code.
 
-## RooFlow v0.4.4
-**(Updated 04-26-2025: Revised and streamlined the mode instructions and added Orchestrator mode definition)**
 </div>
 
 <div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
@@ -85,7 +83,7 @@ flowchart LR
               ```cmd
               curl -L -o install_rooflow.cmd https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.cmd
               ```
-           2. Execute the downloaded script:
+           2. Execute the downloaded script (If you have MCP servers connected, see "Importing Connected MCP Server Tools" below):
               ```cmd
               .\install_rooflow.cmd
               ```
@@ -98,20 +96,20 @@ flowchart LR
               ```bash
               chmod +x install_rooflow.sh
               ```
-           3. Execute the downloaded script:
+           3. Execute the downloaded script (If you have MCP servers connected, see "Importing Connected MCP Server Tools" below):
               ```bash
               ./install_rooflow.sh
               ```
    5.  The command downloads and executes the script, which will check for `git`, clone the repository, move files, clean up, and run the variable insertion process. Follow any on-screen prompts or error messages.
    6.  **Note:** Upon successful completion, the downloaded scripts (`install_rooflow.*` and `insert-variables.*`) will be automatically removed.
 
-   4.  **Verify Installation:** After the script runs successfully:
+   7.  **Verify Installation:** After the script runs successfully:
        *   Check that the `.roo/` directory, along with the `.roomodes`file exist in your project root.
        *   Optionally, inspect the `.roo/system-prompt-*` files to ensure placeholders like `WORKSPACE_PLACEHOLDER` have been replaced with your actual system paths.
 
-   ### Install Global Boomerang Mode
+   ### Install Global Orchestrator Mode
 
-   Since Boomerang mode uses the default Roo Code system prompt, you may wish to make this mode global. If so, follow these manual steps using the Roo Code UI:
+   Since Orchestrator mode uses the default Roo Code system prompt, you may wish to make this mode global. If so, follow these manual steps using the Roo Code UI:
 
    1.  **Open Roo Code Settings:** Click the Roo Code icon in the VS Code Activity Bar, then click the "Prompts" icon (looks like a book/document - Step 1 in image below).
     <br> 
@@ -119,28 +117,28 @@ flowchart LR
 
    2.  **Add New Mode:** Scroll down to the "Modes" section and click the "+" icon (Step 2)
 
-   3.  **Enter Name:** In the "Create New Mode" view, enter the mode name (`Boomerang`) in the "Name" field (Step 3).
+   3.  **Enter Name:** In the "Create New Mode" view, enter the mode name (`Orchestrator`) in the "Name" field (Step 3).
     <br> 
     <img src="https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/images/create-global-mode.png" alt="Create Mode View" width="200"/>
 
-   4.  **Slug:** The "Slug" field should automatically populate with `boomerang` (Step 4).
+   4.  **Slug:** The "Slug" field should automatically populate with `orchestrator` (Step 4).
 
    5.  **Save Location:** Select "Global" (Step 5).
 
    6.  **Role Definition:** Copy the text below and paste it into the "Role Definition" text box (Step 6).
 
-Boomerang mode:
+Orchestrator mode:
 ```text
 You are Roo, a strategic workflow orchestrator who coordinates complex tasks by delegating them to appropriate specialized modes. You have a comprehensive understanding of each mode's capabilities and limitations, allowing you to effectively break down complex problems into discrete tasks that can be solved by different specialists.
 ```
 <br>
 
-   7.  **Custom Instructions:** Copy the custom instructions for Boomerang mode, provided below, and paste it into the "Custom Instructions" text box (Step 7).
+   7.  **Custom Instructions:** Copy the custom instructions for Orchestrator mode, provided below, and paste it into the "Custom Instructions" text box (Step 7).
 
 <br>
 
 <details>
-<summary><strong>Boomerang Mode Custom Instructions (displayed in two sections, paste then sequentially)</strong></summary>
+<summary><strong>Orchestrator Mode Custom Instructions (displayed in two sections, paste then sequentially)</strong></summary>
 
 ```markdown
 Your role is to coordinate complex workflows by delegating tasks to specialized modes. As an orchestrator, you should:
@@ -291,17 +289,51 @@ umb:
 
 <br>
 
-* Note: If you choose to install Boomerang mode only in the local workspace, follow the instructions above but at step 5:  **Save Location:** Select "Project-specific (.roomodes)" ("Step 5" in illustration).
+* Note: If you choose to install Orchestrator mode only in the local workspace, follow the instructions above but at step 5:  **Save Location:** Select "Project-specific (.roomodes)" ("Step 5" in illustration).
 
 <br>
 
    8.  **Create Mode:** Click the "Create Mode" button (Step 8).
 
-#### Boomerang mode should now be available for selection in the Roo Code chat interface across all your workspaces.
+#### Orchestrator mode should now be available for selection in the Roo Code chat interface across all your workspaces.
 
 <br>
 
-   ### 2. Using RooFlow
+   ### Importing Connected MCP Server Tools (Optional)
+
+   If you use [MCP (Model Context Protocol)](https://github.com/modelcontextprotocol/specification) servers with Roo Code, RooFlow can automatically inject the details of your connected servers (their tools, resources, etc.) into the custom Flow mode prompts during installation. This ensures the Flow modes are aware of the same tools as the standard Roo Code modes.
+
+   **To enable this during initial installation:**
+
+   1.  **Get Full System Prompt:** *Before* running the RooFlow installer, you need the complete system prompt text that Roo Code generates dynamically *after* it connects to your MCP servers.
+       *   Navigate to Extensions -> Roo Code -> Prompts (as shown in illustration below).
+       <br>
+       <img src="https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/images/copy_system_prompt.png" alt="Create Mode View" width="200"/>
+
+       *   Select any *standard* Roo Code mode (e.g., "Architect", "Code", "Ask", "Debug").
+       *   Click the "Copy system prompt to clipboard" button (as shown in illustration above).
+       *   This text includes the dynamically discovered information about your *currently connected* MCP servers.
+   2.  **Save as `system_prompt.md`:** Save this copied text into a new file named exactly `system_prompt.md` directly in your project's **root directory**.
+   3.  **Run Installer:** Now, run the `install_rooflow.sh` or `install_rooflow.cmd` script as described in Step 1 above.
+       *   The installer copies the `generate_mcp_yaml` executable.
+       *   It then runs this executable. The executable automatically looks for `system_prompt.md` in the root directory.
+       *   If found, the executable parses the MCP server details from it, converts them to YAML, and injects them into the appropriate placeholder (`# [CONNECTED_MCP_SERVERS]`) within the `.roo/system-prompt-flow-*` files while also performing other variable substitutions.
+       *   If `system_prompt.md` is not found, this injection step is simply skipped.
+
+   **Updating MCP Server Information Later:**
+
+   If you add, remove, or modify your MCP server configurations after the initial RooFlow installation, you'll need to update the Flow mode prompts:
+
+   1.  **Get Updated Prompt:** Ensure your desired MCP servers are connected in Roo Code. Go back to Roo Code settings and copy the *latest* full system prompt text (which includes the updated MCP details) from a standard mode, just like in the initial setup.
+   2.  **Save Updated `system_prompt.md`:** Save this new text into `system_prompt.md` in your project root, overwriting the previous version.
+   3.  **Re-run Installer:** Execute the `install_rooflow.sh` or `install_rooflow.cmd` script again from your project root.
+       *   This script will copy the latest base configuration (`.roo/` files, `.roomodes`) from the repository *and* run the `generate_mcp_yaml` executable again.
+       *   The executable will read your updated `system_prompt.md` and inject the new MCP server details into the freshly copied `.roo/system-prompt-flow-*` files (along with performing basic variable substitutions).
+
+   **⚠️ Important Warning about Updates:** Re-running the installer script is the simplest way to update MCP info, but be aware that it **overwrites** the `.roo/` directory and the `.roomodes` file with fresh copies from the repository. Any manual customizations you might have made directly to the `system-prompt-flow-*` files *after* the initial installation will be **lost**. The executable (`generate_mcp_yaml[.exe]`) remains in the root if you wish to build a more granular update process manually.
+
+
+   ### 3. Using RooFlow
 
    1.  **Start a Chat:** Open a new Roo Code chat in your project.
    2.  **Select a Mode:** Choose the appropriate mode (Flow-Architect, Flow-Code, Flow-Debug, or Flow-Ask) for your task.
@@ -311,7 +343,7 @@ umb:
 
    <br>
 
-   ### 3. Updating RooFlow
+   ### 4. Updating RooFlow
 
    #### Simply run the install script and it will overwrite your existing .roo/ directory and .roomodes file.
 

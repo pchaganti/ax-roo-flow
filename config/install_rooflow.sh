@@ -31,16 +31,17 @@ echo "Copying .roo directory..."
 cp -r "$CLONE_DIR/config/.roo" ./
 
 # 2. Copy specific config files
-echo "Copying .roomodes, insert-variables.sh..."
+echo "Copying .roomodes and executable..."
 cp "$CLONE_DIR/config/.roomodes" ./
-cp "$CLONE_DIR/config/insert-variables.sh" ./
+cp "$CLONE_DIR/config/generate_mcp_yaml" ./ # Copy Linux executable (no extension assumed)
 
 # --- MODIFIED COPY SECTION END ---
 
 
 # Make the setup script executable
-echo "Setting permissions for insert-variables.sh..."
-chmod +x insert-variables.sh
+echo "Setting permissions for executable..."
+chmod +x generate_mcp_yaml # Ensure executable permission
+# Removed CLONED_PY_SCRIPT export, script is now copied locally
 
 
 # --- MODIFIED CLEANUP SECTION START ---
@@ -57,23 +58,24 @@ if [ ! -d ".roo" ]; then
     echo "Error: .roo directory not found after specific copy. Setup failed."
     exit 1
 fi
-if [ ! -f "insert-variables.sh" ]; then
-     echo "Error: insert-variables.sh not found after specific copy. Setup failed."
+# Check if executable was copied
+if [ ! -f "generate_mcp_yaml" ]; then
+     echo "Error: generate_mcp_yaml not found after specific copy. Setup failed."
      exit 1
 fi
 
 
-# Run the setup script
-echo "Running insert-variables.sh..."
-./insert-variables.sh
+# Run the executable to process templates
+echo "Running executable to process templates..."
+# Get OS/Shell/Home/Workspace variables defined earlier
+if [[ "$(uname)" == "Darwin" ]]; then OS_VAL="macOS $(sw_vers -productVersion)"; else OS_VAL=$(uname -s -r); fi
+SHELL_VAL="bash"
+HOME_VAL=$(echo "$HOME")
+WORKSPACE_VAL=$(pwd)
 
-echo "insert-variables.sh completed successfully. Removing it..."
-rm -f insert-variables.sh
-
-
-echo "Scheduling self-deletion of install_rooflow.sh..."
-# Use nohup for more robust background execution, redirect output
-nohup bash -c "sleep 1 && rm -f '$0'" > /dev/null 2>&1 &
+./generate_mcp_yaml --os "$OS_VAL" --shell "$SHELL_VAL" --home "$HOME_VAL" --workspace "$WORKSPACE_VAL"
+# Removed deletion of insert-variables.sh
+# Removed self-deletion of install_rooflow.sh
 
 echo "--- RooFlow config setup complete ---"
 exit 0 # Explicitly exit with success code

@@ -52,26 +52,29 @@ if %errorlevel% gtr 7 (
 :: 2. Copy .roomodes file
 if %COPY_ERROR% equ 0 (
     echo Copying .roomodes...
-    copy /Y "%TEMP_CLONE_DIR%\config\.roomodes" "%CD%\" > nul
-    if errorlevel 1 (
-        echo   ERROR: Failed to copy .roomodes. Check source file exists and permissions.
+    robocopy "%TEMP_CLONE_DIR%\config" "%CD%" .roomodes /NFL /NDL /NJH /NJS /nc /ns /np
+    if %errorlevel% gtr 7 (
+        echo   ERROR: Failed to copy .roomodes using robocopy. Errorlevel: %errorlevel%
         set "COPY_ERROR=1"
     ) else (
         echo   Copied .roomodes.
     )
 )
 
-:: 3. Copy insert-variables.cmd file
+:: Removed copy for insert-variables.cmd
+:: 4. Copy Python script
 if %COPY_ERROR% equ 0 (
-    echo Copying insert-variables.cmd...
-    copy /Y "%TEMP_CLONE_DIR%\config\insert-variables.cmd" "%CD%\" > nul
+    echo Copying generate_mcp_yaml.exe...
+    copy /Y "%TEMP_CLONE_DIR%\config\generate_mcp_yaml.exe" "%CD%\"
     if errorlevel 1 (
-        echo   ERROR: Failed to copy insert-variables.cmd. Check source file exists and permissions.
+        echo   ERROR: Failed to copy generate_mcp_yaml.exe. Check source file exists and permissions.
         set "COPY_ERROR=1"
     ) else (
-        echo   Copied insert-variables.cmd.
+        echo   Copied generate_mcp_yaml.exe.
     )
 )
+
+:: Removed copy for process_prompts.ps1
 
 :: Check if any copy operation failed before proceeding
 if %COPY_ERROR% equ 1 (
@@ -104,31 +107,30 @@ if not exist "%CD%\.roo" (
     echo Error: .roo directory not found after specific copy. Setup failed.
     exit /b 1
 )
-if not exist "%CD%\insert-variables.cmd" (
-    echo Error: insert-variables.cmd not found after specific copy. Setup failed.
+:: Check if executable was copied
+if not exist "%CD%\generate_mcp_yaml.exe" (
+    echo Error: generate_mcp_yaml.exe not found after specific copy. Setup failed.
     exit /b 1
 )
 
-:: Run the setup script
-echo Running insert-variables.cmd...
-call insert-variables.cmd
+:: Run the executable to process templates
+echo Running executable to process templates...
+:: Get OS/Shell/Home/Workspace variables defined earlier
+for /f "tokens=*" %%a in ('powershell -NoProfile -Command "(Get-CimInstance Win32_OperatingSystem).Caption"') do set "OS_VAL=%%a"
+set "SHELL_VAL=cmd"
+set "HOME_VAL=%USERPROFILE%"
+set "WORKSPACE_VAL=%CD%"
+
+:: Ensure quotes around arguments, especially paths
+.\generate_mcp_yaml.exe --os "%OS_VAL%" --shell "%SHELL_VAL%" --home "%HOME_VAL%" --workspace "%WORKSPACE_VAL%"
 if %errorlevel% neq 0 (
-    echo Error: insert-variables.cmd failed to execute properly.
-    rem Do not attempt self-delete if the main script failed
+    echo Error: Executable generate_mcp_yaml.exe failed to execute properly.
     exit /b 1
-)
-
-echo insert-variables.cmd completed successfully. Removing it...
-del /q /f insert-variables.cmd >nul 2>nul
-if errorlevel 1 (
-    echo Warning: Failed to delete insert-variables.cmd after execution.
 )
 
 echo --- RooFlow config setup complete ---
-
-:: Schedule self-deletion
-echo Scheduling self-deletion of install_rooflow.cmd...
-start "" /b cmd /c "timeout /t 1 > nul && del /q /f "%~f0""
+:: Removed deletion of insert-variables.cmd
+:: Removed self-deletion of install_rooflow.cmd
 
 endlocal
 exit /b 0
