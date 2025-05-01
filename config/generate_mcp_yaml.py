@@ -153,11 +153,9 @@ def process_target_file(file_path: str, args: argparse.Namespace, mcp_yaml_conte
         # 1. Basic Placeholders
         content = content.replace("OS_PLACEHOLDER", args.os or "Unknown OS")
         content = content.replace("SHELL_PLACEHOLDER", args.shell or "Unknown Shell")
-        # Escape backslashes for paths on Windows before replacing
-        home_path_processed = args.home.replace('\\', '\\\\') if args.home else 'Unknown Home'
-        workspace_path_processed = args.workspace.replace('\\', '\\\\') if args.workspace else 'Unknown Workspace'
-        content = content.replace("HOME_PLACEHOLDER", home_path_processed)
-        content = content.replace("WORKSPACE_PLACEHOLDER", workspace_path_processed)
+        # Use arguments directly for replacement
+        content = content.replace("HOME_PLACEHOLDER", args.home or 'Unknown Home')
+        content = content.replace("WORKSPACE_PLACEHOLDER", args.workspace or 'Unknown Workspace')
 
         # 2. MCP Block Injection/Overwrite
         placeholder_pattern = r'#\s*\[CONNECTED_MCP_SERVERS\]' # Python regex
