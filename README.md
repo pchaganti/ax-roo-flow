@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚠️Notice: The [RooFlow](https://github.com/GreatScottyMac/RooFlow) modes use custom system prompts, which are experimental. This project is NOT endorsed or supported by Roo Code.
+## ⚠️Notice: The [RooFlow](https://github.com/GreatScottyMac/RooFlow) modes use custom system prompts, which are experimental. This project is NOT endorsed or supported by Roo Code.
 
 </div>
 
