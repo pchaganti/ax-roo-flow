@@ -14,6 +14,24 @@ else
     echo "Found git executable."
 fi
 
+# Check for Python 3
+if ! command -v python3 &> /dev/null; then
+    echo "Error: python3 is not found in your PATH."
+    echo "Please install Python 3 (https://www.python.org/downloads/)."
+    exit 1
+else
+    echo "Found python3 executable."
+fi
+
+# Check for PyYAML library
+if ! python3 -c "import yaml" &> /dev/null; then
+    echo "Error: PyYAML library is not found for Python 3."
+    echo "Please install it using: pip install pyyaml"
+    exit 1
+else
+    echo "Found PyYAML library."
+fi
+
 # Define a temporary directory name for clarity
 CLONE_DIR="RooFlow_temp_$$" # Using $$ for process ID to add uniqueness
 
@@ -31,18 +49,16 @@ echo "Copying .roo directory..."
 cp -r "$CLONE_DIR/config/.roo" ./
 
 # 2. Copy specific config files
-echo "Copying .roomodes and executable..."
+echo "Copying .roomodes and Python script..."
 cp "$CLONE_DIR/config/.roomodes" ./
-cp "$CLONE_DIR/config/generate_mcp_yaml" ./ # Copy Linux executable (no extension assumed)
+cp "$CLONE_DIR/config/generate_mcp_yaml.py" ./ # Copy Python script
 
 # --- MODIFIED COPY SECTION END ---
 
 
-# Make the setup script executable
-echo "Setting permissions for executable..."
-chmod +x generate_mcp_yaml # Ensure executable permission
-# Removed CLONED_PY_SCRIPT export, script is now copied locally
+# Python script doesn't need execute permission set here
 
+# Removed CLONED_PY_SCRIPT export, script is now copied locally
 
 # --- MODIFIED CLEANUP SECTION START ---
 echo "Cleaning up temporary clone directory ($CLONE_DIR)..."
@@ -58,22 +74,22 @@ if [ ! -d ".roo" ]; then
     echo "Error: .roo directory not found after specific copy. Setup failed."
     exit 1
 fi
-# Check if executable was copied
-if [ ! -f "generate_mcp_yaml" ]; then
-     echo "Error: generate_mcp_yaml not found after specific copy. Setup failed."
+# Check if Python script was copied
+if [ ! -f "generate_mcp_yaml.py" ]; then
+     echo "Error: generate_mcp_yaml.py not found after specific copy. Setup failed."
      exit 1
 fi
 
 
-# Run the executable to process templates
-echo "Running executable to process templates..."
+# Run the Python script to process templates
+echo "Running Python script to process templates..."
 # Get OS/Shell/Home/Workspace variables defined earlier
 if [[ "$(uname)" == "Darwin" ]]; then OS_VAL="macOS $(sw_vers -productVersion)"; else OS_VAL=$(uname -s -r); fi
 SHELL_VAL="bash"
 HOME_VAL=$(echo "$HOME")
 WORKSPACE_VAL=$(pwd)
 
-./generate_mcp_yaml --os "$OS_VAL" --shell "$SHELL_VAL" --home "$HOME_VAL" --workspace "$WORKSPACE_VAL"
+python3 generate_mcp_yaml.py --os "$OS_VAL" --shell "$SHELL_VAL" --home "$HOME_VAL" --workspace "$WORKSPACE_VAL"
 # Removed deletion of insert-variables.sh
 # Removed self-deletion of install_rooflow.sh
 

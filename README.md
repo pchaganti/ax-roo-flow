@@ -74,8 +74,14 @@ flowchart LR
    ### Installation
 
    1.  **Install Roo Code Extension:** Ensure you have the [Roo Code extension](https://github.com/RooVetGit/Roo-Code) installed in VS Code.
-   2.  **Prerequisite: Install Git:** The installation script requires `git` to be installed and accessible in your system's PATH. Download Git from [https://git-scm.com/downloads](https://git-scm.com/downloads).
-
+   2.  **Prerequisites:**
+       *   **Git:** The installation script requires `git` to be installed and accessible in your system's PATH. Download Git from [https://git-scm.com/downloads](https://git-scm.com/downloads).
+       *   **Python 3:** The script now uses Python directly. Ensure Python 3 is installed and accessible as `python3` (Linux/macOS) or `python` (Windows) in your PATH. Download Python from [https://www.python.org/downloads/](https://www.python.org/downloads/).
+       *   **PyYAML:** The Python script requires the PyYAML library. Install it using pip:
+           ```bash
+           pip install pyyaml
+           # or potentially pip3 install pyyaml
+           ```
    3.  **Open your terminal** and navigate (`cd`) to your project's **root directory**.
    4.  **Run the appropriate command** for your operating system directly:
        *   **Windows (Command Prompt or PowerShell):**
@@ -100,8 +106,8 @@ flowchart LR
               ```bash
               ./install_rooflow.sh
               ```
-   5.  The command downloads and executes the script, which will check for `git`, clone the repository, move files, clean up, and run the variable insertion process. Follow any on-screen prompts or error messages.
-   6.  **Note:** Upon successful completion, the downloaded scripts (`install_rooflow.*` and `insert-variables.*`) will be automatically removed.
+   5.  The command downloads and executes the script, which will check for prerequisites (`git`, `python3`/`python`, `pyyaml`), clone the repository, copy necessary files (including `generate_mcp_yaml.py`), clean up the clone, and run the Python script to process templates. Follow any on-screen prompts or error messages.
+   6.  **Note:** The installer script (`install_rooflow.*`) is designed to remain after execution for potential re-runs (e.g., for updates).
 
    7.  **Verify Installation:** After the script runs successfully:
        *   Check that the `.roo/` directory, along with the `.roomodes`file exist in your project root.
@@ -314,10 +320,10 @@ umb:
        *   Click the "Copy system prompt to clipboard" button (as shown in illustration above).
        *   This text includes the dynamically discovered information about your *currently connected* MCP servers.
    2.  **Save as `system_prompt.md`:** Save this copied text into a new file named exactly `system_prompt.md` directly in your project's **root directory**.
-   3.  **Run Installer:** Now, run the `install_rooflow.sh` or `install_rooflow.cmd` script as described in Step 1 above.
-       *   The installer copies the `generate_mcp_yaml` executable.
-       *   It then runs this executable. The executable automatically looks for `system_prompt.md` in the root directory.
-       *   If found, the executable parses the MCP server details from it, converts them to YAML, and injects them into the appropriate placeholder (`# [CONNECTED_MCP_SERVERS]`) within the `.roo/system-prompt-flow-*` files while also performing other variable substitutions.
+   3.  **Run Installer:** Now, run the `install_rooflow.sh` or `install_rooflow.cmd` script as described in the main Installation section above.
+       *   The installer copies the Python script `generate_mcp_yaml.py`.
+       *   It then runs this Python script (using `python3` or `python`). The script automatically looks for `system_prompt.md` in the root directory.
+       *   If found, the Python script parses the MCP server details from it, converts them to YAML, and injects them into the appropriate placeholder (`# [CONNECTED_MCP_SERVERS]`) within the `.roo/system-prompt-flow-*` files while also performing other variable substitutions.
        *   If `system_prompt.md` is not found, this injection step is simply skipped.
 
    **Updating MCP Server Information Later:**
@@ -327,10 +333,10 @@ umb:
    1.  **Get Updated Prompt:** Ensure your desired MCP servers are connected in Roo Code. Go back to Roo Code settings and copy the *latest* full system prompt text (which includes the updated MCP details) from a standard mode, just like in the initial setup.
    2.  **Save Updated `system_prompt.md`:** Save this new text into `system_prompt.md` in your project root, overwriting the previous version.
    3.  **Re-run Installer:** Execute the `install_rooflow.sh` or `install_rooflow.cmd` script again from your project root.
-       *   This script will copy the latest base configuration (`.roo/` files, `.roomodes`) from the repository *and* run the `generate_mcp_yaml` executable again.
-       *   The executable will read your updated `system_prompt.md` and inject the new MCP server details into the freshly copied `.roo/system-prompt-flow-*` files (along with performing basic variable substitutions).
+       *   This script will copy the latest base configuration (`.roo/` files, `.roomodes`, `generate_mcp_yaml.py`) from the repository *and* run the `generate_mcp_yaml.py` Python script again.
+       *   The Python script will read your updated `system_prompt.md` and inject the new MCP server details into the freshly copied `.roo/system-prompt-flow-*` files (along with performing basic variable substitutions).
 
-   **⚠️ Important Warning about Updates:** Re-running the installer script is the simplest way to update MCP info, but be aware that it **overwrites** the `.roo/` directory and the `.roomodes` file with fresh copies from the repository. Any manual customizations you might have made directly to the `system-prompt-flow-*` files *after* the initial installation will be **lost**. The executable (`generate_mcp_yaml[.exe]`) remains in the root if you wish to build a more granular update process manually.
+   **⚠️ Important Warning about Updates:** Re-running the installer script is the simplest way to update MCP info, but be aware that it **overwrites** the `.roo/` directory and the `.roomodes` file with fresh copies from the repository. Any manual customizations you might have made directly to the `system-prompt-flow-*` files *after* the initial installation will be **lost**. The Python script (`generate_mcp_yaml.py`) remains in the root if you wish to build a more granular update process manually.
 
 
    ### 3. Using RooFlow

@@ -14,6 +14,26 @@ if %errorlevel% neq 0 (
     echo Found git executable.
 )
 
+:: Check for Python 3
+where python >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Error: python is not found in your PATH.
+    echo Please install Python 3 (https://www.python.org/downloads/) and ensure it's added to PATH.
+    exit /b 1
+) else (
+    echo Found python executable.
+)
+
+:: Check for PyYAML library
+python -c "import yaml" >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Error: PyYAML library is not found for Python.
+    echo Please install it using: pip install pyyaml
+    exit /b 1
+) else (
+    echo Found PyYAML library.
+)
+
 :: Define a temporary directory for cloning
 :: FIXED TYPO: Was TEMP_CLONEDIR in one place, TEMP_CLONE_DIR in others. Standardizing.
 set "TEMP_CLONE_DIR=%TEMP%\RooFlowClone_%RANDOM%"
@@ -64,13 +84,13 @@ if %COPY_ERROR% equ 0 (
 :: Removed copy for insert-variables.cmd
 :: 4. Copy Python script
 if %COPY_ERROR% equ 0 (
-    echo Copying generate_mcp_yaml.exe...
-    copy /Y "%TEMP_CLONE_DIR%\config\generate_mcp_yaml.exe" "%CD%\"
+    echo Copying generate_mcp_yaml.py...
+    copy /Y "%TEMP_CLONE_DIR%\config\generate_mcp_yaml.py" "%CD%\"
     if errorlevel 1 (
-        echo   ERROR: Failed to copy generate_mcp_yaml.exe. Check source file exists and permissions.
+        echo   ERROR: Failed to copy generate_mcp_yaml.py. Check source file exists and permissions.
         set "COPY_ERROR=1"
     ) else (
-        echo   Copied generate_mcp_yaml.exe.
+        echo   Copied generate_mcp_yaml.py.
     )
 )
 
@@ -107,14 +127,14 @@ if not exist "%CD%\.roo" (
     echo Error: .roo directory not found after specific copy. Setup failed.
     exit /b 1
 )
-:: Check if executable was copied
-if not exist "%CD%\generate_mcp_yaml.exe" (
-    echo Error: generate_mcp_yaml.exe not found after specific copy. Setup failed.
+:: Check if Python script was copied
+if not exist "%CD%\generate_mcp_yaml.py" (
+    echo Error: generate_mcp_yaml.py not found after specific copy. Setup failed.
     exit /b 1
 )
 
-:: Run the executable to process templates
-echo Running executable to process templates...
+:: Run the Python script to process templates
+echo Running Python script to process templates...
 :: Get OS/Shell/Home/Workspace variables defined earlier
 for /f "tokens=*" %%a in ('powershell -NoProfile -Command "(Get-CimInstance Win32_OperatingSystem).Caption"') do set "OS_VAL=%%a"
 set "SHELL_VAL=cmd"
@@ -122,9 +142,9 @@ set "HOME_VAL=%USERPROFILE%"
 set "WORKSPACE_VAL=%CD%"
 
 :: Ensure quotes around arguments, especially paths
-.\generate_mcp_yaml.exe --os "%OS_VAL%" --shell "%SHELL_VAL%" --home "%HOME_VAL%" --workspace "%WORKSPACE_VAL%"
+python generate_mcp_yaml.py --os "%OS_VAL%" --shell "%SHELL_VAL%" --home "%HOME_VAL%" --workspace "%WORKSPACE_VAL%"
 if %errorlevel% neq 0 (
-    echo Error: Executable generate_mcp_yaml.exe failed to execute properly.
+    echo Error: Python script generate_mcp_yaml.py failed to execute properly.
     exit /b 1
 )
 
