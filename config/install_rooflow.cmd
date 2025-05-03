@@ -15,7 +15,7 @@ if %errorlevel% neq 0 (
 )
 
 :: Check for Python 3
-where python >nul 2>nul
+python --version >nul 2>nul
 if %errorlevel% neq 0 (
     echo Error: python is not found in your PATH.
     echo Please install Python 3 (https://www.python.org/downloads/) and ensure it's added to PATH.
