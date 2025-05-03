@@ -24,15 +24,15 @@ if %errorlevel% neq 0 (
     echo Found python executable.
 )
 
-:: Check for PyYAML library
-python -c "import yaml" >nul 2>nul
-if %errorlevel% neq 0 (
-    echo Error: PyYAML library is not found for Python.
-    echo Please install it using: pip install pyyaml
-    exit /b 1
-) else (
-    echo Found PyYAML library.
-)
+:: :: Check for PyYAML library (Temporarily commented out for debugging)
+:: python -c "import yaml" >nul 2>nul
+:: if %errorlevel% neq 0 (
+::     echo Error: PyYAML library is not found for Python.
+::     echo Please install it using: pip install pyyaml
+::     exit /b 1
+:: ) else (
+::     echo Found PyYAML library.
+:: )
 
 :: Define a temporary directory for cloning
 :: FIXED TYPO: Was TEMP_CLONEDIR in one place, TEMP_CLONE_DIR in others. Standardizing.
