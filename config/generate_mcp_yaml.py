@@ -150,12 +150,12 @@ def process_target_file(file_path: str, args: argparse.Namespace, mcp_yaml_conte
         with codecs.open(file_path, 'r', encoding='utf-8-sig') as f:
             content = f.read()
 
-        # 1. Basic Placeholders
-        content = content.replace("OS_PLACEHOLDER", args.os or "Unknown OS")
-        content = content.replace("SHELL_PLACEHOLDER", args.shell or "Unknown Shell")
+        # 1. Basic Placeholders (Match bracketed format used in templates)
+        content = content.replace("[OS_PLACEHOLDER]", args.os or "Unknown OS")
+        content = content.replace("[SHELL_PLACEHOLDER]", args.shell or "Unknown Shell")
         # Use arguments directly for replacement
-        content = content.replace("HOME_PLACEHOLDER", args.home or 'Unknown Home')
-        content = content.replace("WORKSPACE_PLACEHOLDER", args.workspace or 'Unknown Workspace')
+        content = content.replace("[HOME_PLACEHOLDER]", args.home or 'Unknown Home')
+        content = content.replace("[WORKSPACE_PLACEHOLDER]", args.workspace or 'Unknown Workspace')
 
         # 2. MCP Block Injection/Overwrite
         placeholder_pattern = r'#\s*\[CONNECTED_MCP_SERVERS\]' # Python regex
