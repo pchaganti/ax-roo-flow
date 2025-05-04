@@ -1,34 +1,8 @@
 <div align="center">
 
-## ⚠️Notice: The [RooFlow](https://github.com/GreatScottyMac/RooFlow) modes use custom system prompts, which are experimental. This project is NOT endorsed or supported by Roo Code.
+## ⚠️ Experimental Alternative for Roo Code ⚠️
 
-</div>
-
-<div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
-
-* **RooFlow is now installed alongside the standard Roo Code modes, as Flow-Architect, Flow-Code, Flow-Debug , and Flow-Ask.**
-* **Now you can easily switch to a standard Roo Code mode if something is not working correctly with a RooFlow mode.**
-* **In order to retain memory bank functionality when working with a standard Roo Code mode, simply copy/paste the corresponding [memory bank instructions](https://github.com/GreatScottyMac/RooFlow/tree/main/modules) into the Mode-specific Custom Instructions box for each mode:**
-
-<div align="center">
-
-   <img src="https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/images/Mode-specific%20Custom%20Instructions.png" alt="RooFlow Logo" width="300"/>
-
-</div>
-
-<div style="max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
-
-#### Now you will have [Roo Code Memory Bank](https://github.com/GreatScottyMac/roo-code-memory-bank) when running the standard Roo Code modes, along with the experimental RooFlow modes with their custom system prompts, which use the same memory bank instructions. 
-
-</div>
-
-<div align="center">
-
-<br>
-
-### ☢️☢️☢️ Footgun in Use ☢️☢️☢️
-
-<br>
+**RooFlow provides an *experimental* set of modes and system prompts designed as an alternative way to interact with the [Roo Code](https://github.com/RooVetGit/Roo-Code) VS Code extension.** It uses YAML-based system prompts aiming for improved efficiency and token usage compared to the standard Markdown prompts. RooFlow is NOT officially endorsed or supported by the Roo Code project. Use with caution.
 
 # RooFlow 
 <img src="https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/images/rooflow_logo.png" alt="RooFlow Logo" width="300"/>
@@ -42,12 +16,12 @@
 
 ## 🎯 Overview
 
-RooFlow enhances AI-assisted development in VS Code by providing **persistent project context** and **optimized mode interactions**, resulting in **reduced token consumption** and a more efficient workflow.  It builds upon the concepts of the Roo Code Memory Bank, but streamlines the process and introduces a more integrated system of modes. RooFlow ensures your AI assistant maintains a deep understanding of your project across sessions, even after interruptions.
+RooFlow offers an **experimental alternative** approach to AI-assisted development within the **[Roo Code](https://github.com/RooVetGit/Roo-Code) VS Code extension**. It utilizes **YAML-based system prompts** for its specialized "Flow" modes, potentially offering **improved efficiency and reduced token consumption** compared to standard modes. RooFlow provides **persistent project context** through its Memory Bank system (adapted from the concepts in [roo-code-memory-bank](https://github.com/GreatScottyMac/roo-code-memory-bank)), ensuring the AI assistant maintains project understanding across sessions.
 
 ### Key Improvements over Roo Code Memory Bank:
 
 *   **Reduced Token Consumption:** Optimized prompts and instructions minimize token usage.
-*   **Four Integrated Modes:**  Flow-Architect, Flow-Code, Flow-Debug, and Flow-Ask modes work together seamlessly.
+*   **Five Integrated Modes:** Flow-Architect, Flow-Code, Flow-Debug, Flow-Ask, and Flow-Orchestrator modes work together seamlessly.
 *   **Simplified Setup:**  Easier installation and configuration.
 *   **Streamlined Real-time Updates:**  More efficient and targeted Memory Bank updates.
 *   **Clearer Instructions:**  Improved YAML-based rule files for better readability and maintainability.
@@ -55,14 +29,57 @@ RooFlow enhances AI-assisted development in VS Code by providing **persistent pr
 ### Key Components
 
 ```mermaid
-flowchart LR
-    A["RooFlow"] --> D["Toolkit"]
-    A["RooFlow"] --> M["Real-time Updates"]
-    D --> C["Mode Rules"]
-    B["Memory Bank"] --> E["Product Context"] & N["Active Context"] & F["Decisions"] & G["Progress"]
-    C --> H["Flow-Architect"] & I["Flow-Code"] & J["Flow-Ask"] & K["Flow-Debug"]
-    M["Real-time Updates"] --> B
+%%{init: {'themeVariables': { 'fontSize': '14px'}}}%%
+graph LR
+    subgraph Workspace
+        U[User]
+        MB[(Memory Bank)]
+    end
+
+    subgraph VSCode
+        RC[Roo Code Extension]
+    end
+
+    subgraph RooFlow ["RooFlow (Experimental Alternative)"]
+        subgraph FlowModes ["Flow Modes (YAML Prompts)"]
+            direction TB
+            FO[Flow-Orchestrator]
+            subgraph ExecutionModes ["Direct/Delegated Modes"]
+               direction LR
+               FA[Flow-Architect]
+               FC[Flow-Code]
+               FD[Flow-Debug]
+               FK[Flow-Ask]
+            end
+             %% Link Orchestrator to the group it delegates to
+             FO -- Delegates --> ExecutionModes
+        end
+    end
+
+    %% Core Flow
+    U -- Interacts with --> RC
+    RC -- Uses --> RooFlow
+
+    %% User Task Paths
+    U -- Complex Task --> FO
+    U -- Direct Task --> ExecutionModes
+
+
+    %% Memory Bank Interactions
+    FA <--> MB
+    FC <--> MB
+    FD <--> MB
+    FK --> MB
+
+    %% Styling
+    style MB fill:#f9f,stroke:#333,stroke-width:2px,color:#000
+    style FO fill:#ccf,stroke:#333,stroke-width:2px,color:#000
 ```
+
+**Memory Bank Access Legend:**
+*   `<-->` (Read/Write): Flow-Architect, Flow-Code, Flow-Debug
+*   `-->` (Read-Only): Flow-Ask
+
 
 - 🧠 **Memory Bank**: Persistent storage for project knowledge (automatically managed).
 - 💻 **System Prompts**: YAML-based core instructions for each mode (`.roo/system-prompt-[mode]`).
@@ -112,6 +129,7 @@ flowchart LR
    7.  **Verify Installation:** After the script runs successfully:
        *   Check that the `.roo/` directory, along with the `.roomodes`file exist in your project root.
        *   Optionally, inspect the `.roo/system-prompt-*` files to ensure placeholders like `WORKSPACE_PLACEHOLDER` have been replaced with your actual system paths.
+   8.  **Coexistence with Standard Modes:** The RooFlow installation adds the `Flow-*` modes alongside the standard Roo Code modes (Architect, Code, Debug, Ask). You can switch between Flow modes and standard modes at any time using the Roo Code interface. If you encounter issues with a Flow mode, you can easily switch back to its standard counterpart.
 
    ### Importing Connected MCP Server Tools (Optional)
 
@@ -121,7 +139,7 @@ flowchart LR
 
    1.  **Get Full System Prompt:** *Before* running the RooFlow installer, you need the complete system prompt text that Roo Code generates dynamically *after* it connects to your MCP servers.
        *   Navigate to Extensions -> Roo Code -> Prompts (as shown in illustration below).
-       <br>
+       <br/>
        <img src="https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/images/copy_system_prompt.png" alt="Create Mode View" width="200"/>
 
        *   Select any *standard* Roo Code mode (e.g., "Architect", "Code", "Ask", "Debug").
@@ -150,18 +168,23 @@ flowchart LR
    ### 3. Using RooFlow
 
    1.  **Start a Chat:** Open a new Roo Code chat in your project.
-   2.  **Select a Mode:** Choose the appropriate mode (Flow-Architect, Flow-Code, Flow-Debug, or Flow-Ask) for your task.
-   3.  **Interact with Roo:**  Give Roo instructions and ask questions. Roo will automatically use the Memory Bank to maintain context.
+   2.  **Select a Mode:** Choose the appropriate mode for your task:
+       *   **Flow-Architect:** For system design, project structure, and Memory Bank initialization.
+       *   **Flow-Code:** For writing, modifying, and documenting code.
+       *   **Flow-Debug:** For troubleshooting errors and debugging code.
+       *   **Flow-Ask:** For questions, code analysis, and explanations.
+       *   **Flow-Orchestrator:** For complex tasks requiring breakdown and delegation to other modes (see [Boomerang Tasks](#boomerang-tasks-orchestrate-complex-workflows)).
+   3.  **Interact with Roo:** Give Roo instructions and ask questions. Roo will use the Memory Bank (if initialized) and mode capabilities to assist.
    4.  **Memory Bank Initialization:**  If you start a chat in a project *without* a `memory-bank/` directory, Roo will suggest switching to Flow-Architect mode and guide you through the initialization process.
    5. **"Update Memory Bank" Command:** At any time, you can type "Update Memory Bank" or "UMB" to force a synchronization of the chat session's information into the Memory Bank. This is useful for ensuring continuity across sessions or before switching modes.
 
-   <br>
+   <br/>
 
    ### 4. Updating RooFlow
 
    #### Simply run the install script and it will overwrite your existing .roo/ directory and .roomodes file.
 
-<br>
+<br/>
 
 ## 📚 Memory Bank Structure
 
@@ -189,7 +212,7 @@ The Memory Bank is updated automatically based on significant events within each
 
 ### 🤝 Mode Collaboration
 
-The five modes (Flow-Architect, Flow-Code, Flow-Debug, and Flow-Ask) are designed to work together seamlessly.  They can switch between each other as needed, and they share information through the Memory Bank.
+The five modes (Flow-Architect, Flow-Code, Flow-Debug, Flow-Ask, and Flow-Orchestrator) are designed to work together seamlessly. Flow-Orchestrator can delegate tasks to the other modes, and they can switch between each other as needed, sharing information through the Memory Bank.
 
 ### ⬇️ Reduced Token Consumption
 
