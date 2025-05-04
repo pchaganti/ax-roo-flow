@@ -36,7 +36,7 @@ def parse_mcp_servers_md(markdown_content: str) -> list:
     """
     servers = []
     # --- Define Delimiters ---
-    start_delimiter = "\nWhen a server is connected, you can use the server's tools via the `use_mcp_tool` tool, and access the server's resources via the `access_mcp_resource` tool.\n\n"
+    start_delimiter = "\n\nWhen a server is connected, you can use the server's tools via the `use_mcp_tool` tool, and access the server's resources via the `access_mcp_resource` tool.\n\n" # Adjusted leading newline
     end_section_delimiter = "\n## Creating an MCP Server"
 
     # --- Extract Relevant Section ---
