@@ -1,38 +1,18 @@
 @echo off
-setlocal enabledelayedexpansion
+setlocal
 
 echo --- Starting RooFlow config setup ---
 
-:: Check for Git
-where git >nul 2>nul
-if %errorlevel% neq 0 (
-    echo Error: git is not found in your PATH.
-    echo Please install Git and ensure it's added to your system's PATH.
-    echo You can download Git from: https://git-scm.com/download/win
-    exit /b 1
-) else (
-    echo Found git executable.
-)
-
-:: Check for Python 3
-python --version >nul 2>nul
-if %errorlevel% neq 0 (
-    echo Error: python is not found in your PATH.
-    echo Please install Python 3 (https://www.python.org/downloads/) and ensure it's added to PATH.
-    exit /b 1
-) else (
-    echo Found python executable.
-)
-
-:: :: Check for PyYAML library (Temporarily commented out for debugging)
-:: python -c "import yaml" >nul 2>nul
-:: if %errorlevel% neq 0 (
-::     echo Error: PyYAML library is not found for Python.
-::     echo Please install it using: pip install pyyaml
-::     exit /b 1
-:: ) else (
-::     echo Found PyYAML library.
-:: )
+:: --- Dependency Checks ---
+echo Checking dependencies...
+call :CheckGit
+if errorlevel 1 goto DependencyError
+call :CheckPython
+if errorlevel 1 goto DependencyError
+call :CheckPyYAML
+if errorlevel 1 goto DependencyError
+echo All dependencies found.
+:: --- End Dependency Checks ---
 
 :: Define a temporary directory for cloning
 :: FIXED TYPO: Was TEMP_CLONEDIR in one place, TEMP_CLONE_DIR in others. Standardizing.
@@ -151,6 +131,50 @@ if %errorlevel% neq 0 (
 echo --- RooFlow config setup complete ---
 :: Removed deletion of insert-variables.cmd
 :: Removed self-deletion of install_rooflow.cmd
+
+goto ScriptEnd
+
+:DependencyError
+echo A required dependency (Git, Python, or PyYAML) was not found or failed check. Aborting.
+exit /b 1
+
+:ScriptEnd
+goto :EOF
+
+:: --- Subroutines ---
+
+:CheckGit
+where git >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Error: git is not found in your PATH.
+    echo Please install Git and ensure it's added to your system's PATH.
+    echo You can download Git from: https://git-scm.com/download/win
+    exit /b 1
+)
+echo   - Git found.
+goto :EOF
+
+:CheckPython
+where python >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Error: python is not found in your PATH.
+    echo Please install Python 3 ^(https://www.python.org/downloads/^) and ensure it's added to PATH.
+    exit /b 1
+)
+echo   - Python found.
+goto :EOF
+
+:CheckPyYAML
+python -c "import yaml" >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Error: PyYAML library is not found for Python.
+    echo Please install it using: pip install pyyaml
+    exit /b 1
+)
+echo   - PyYAML library found.
+goto :EOF
+
+:: --- End Subroutines ---
 
 endlocal
 exit /b 0
