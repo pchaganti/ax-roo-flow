@@ -1,6 +1,6 @@
 <div align="center">
 
-## ⚠️ Alternate System Prompt Format for Roo Code ⚠️
+## ⚠️ Alternate System Prompt Format for Roo Code ⚠️
 
 **RooFlow provides an *experimental* set of modes and system prompts designed as an alternative way to interact with the [Roo Code](https://github.com/RooVetGit/Roo-Code) VS Code extension.** It uses YAML-based system prompts aiming for improved efficiency and token usage compared to the standard Markdown prompts. RooFlow is NOT officially endorsed or supported by the Roo Code project. Use with caution.
 
