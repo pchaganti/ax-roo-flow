@@ -17,7 +17,7 @@ config-old/
 system_prompt.md
 build/*
 dist/
-generate_mcp_yaml
+
 generate_mcp_yaml.py
 
 install_rooflow.sh
