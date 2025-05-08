@@ -136,9 +136,14 @@ def generate_mcp_yaml(servers: list) -> str | None:
     try:
         output_data = {'servers': servers}
         yaml_output = yaml.dump(output_data, Dumper=yaml.SafeDumper, default_flow_style=None, sort_keys=False, indent=2, width=2000)
+:start_line:140
+:end_line:142
+-------
         # Prepend 4 spaces to each line for desired base indentation
         indented_yaml_output = "\n".join(["    " + line for line in yaml_output.splitlines()])
-        return indented_yaml_output
+        # Escape backslashes for regex replacement in target files
+        escaped_yaml_output = indented_yaml_output.replace('\\', '\\\\')
+        return escaped_yaml_output
     except yaml.YAMLError as e:
         print(f"Error generating YAML: {e}", file=sys.stderr)
         return None
