@@ -115,6 +115,7 @@ if %errorlevel% neq 0 (
 
 :: --- EMBEDDED PROMPT UPDATE LOGIC (via PowerShell inline) ---
 echo --- Starting Roo prompt update with ConPort strategy (using PowerShell) ---
+echo DEBUG: CHECKPOINT AFTER ECHO, BEFORE SET
 set "TEMP_PS1_SCRIPT=%TEMP%\RooUpdatePrompts_%RANDOM%.ps1"
 
 (
