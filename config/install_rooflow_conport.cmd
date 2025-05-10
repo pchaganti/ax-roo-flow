@@ -126,43 +126,43 @@ set "TEMP_PS1_SCRIPT=%TEMP%\RooUpdatePrompts_%RANDOM%.ps1"
     echo $askPrompt = 'system-prompt-flow-ask';
     echo $codePrompt = 'system-prompt-flow-code';
     echo $debugPrompt = 'system-prompt-flow-debug';
-    echo if (-not (Test-Path -Path $rooDir -PathType Container)) { Write-Error ('Error (Update Logic): Directory ''{0}'' not found.' -f $rooDir); exit 1; }
-    echo if (-not (Test-Path -Path $strategyFile -PathType Leaf)) { Write-Error ('Error (Update Logic): Strategy file ''{0}'' not found.' -f $strategyFile); exit 1; }
-    echo try { $strategyContent = Get-Content -Path $strategyFile -Raw } catch { $actualErrorMessage = $_.Exception.Message; Write-Error ('Error reading strategy file ''{0}'': {1}' -f $strategyFile, $actualErrorMessage); exit 1; }
+    echo if ^(-not ^(Test-Path -Path $rooDir -PathType Container^)^) { Write-Error ^('Error ^(Update Logic^): Directory ''''{0}'''' not found.' -f $rooDir^); exit 1; }
+    echo if ^(-not ^(Test-Path -Path $strategyFile -PathType Leaf^)^) { Write-Error ^('Error ^(Update Logic^): Strategy file ''''{0}'''' not found.' -f $strategyFile^); exit 1; }
+    echo try { $strategyContent = Get-Content -Path $strategyFile -Raw } catch { $actualErrorMessage = $_.Exception.Message; Write-Error ^('Error reading strategy file ''''{0}'''': {1}^' -f $strategyFile, $actualErrorMessage^); exit 1; }
     echo function Process-Replacement {
-    echo   param ([string]$TargetFileName)
+    echo   param ^([string]$TargetFileName^)
     echo   $TargetFilePath = Join-Path $rooDir $TargetFileName
-    echo   if (-not (Test-Path -Path $TargetFilePath -PathType Leaf)) { Write-Warning ('Target file ''{0}'' not found. Skipping.' -f $TargetFilePath); return; }
-    echo   Write-Host ('Processing (Update Logic) {0} for replacement...' -f $TargetFilePath)
+    echo   if ^(-not ^(Test-Path -Path $TargetFilePath -PathType Leaf^)^) { Write-Warning ^('Target file ''''{0}'''' not found. Skipping.' -f $TargetFilePath^); return; }
+    echo   Write-Host ^('Processing ^(Update Logic^) {0} for replacement...' -f $TargetFilePath^)
     echo   try {
     echo     $fileContent = Get-Content -Path $TargetFilePath -Raw
-    echo     $lines = $fileContent -split '(\r?\n)'
+    echo     $lines = $fileContent -split '^^^(\r?\n^^^)'
     echo     $lineNum = -1
-    echo     for ($i = 0; $i -lt $lines.Length; $i++) { if ($lines[$i] -match '^memory_bank_strategy:') { $lineNum = $i; break; } }
-    echo     if ($lineNum -eq -1) { Write-Warning ('''memory_bank_strategy:'' not found in ''{0}''. Skipping.' -f $TargetFilePath); return; }
+    echo     for ^($i = 0; $i -lt $lines.Length; $i++^) { if ^($lines[$i] -match '^^memory_bank_strategy:'^) { $lineNum = $i; break; } }
+    echo     if ^($lineNum -eq -1^) { Write-Warning ^('''''memory_bank_strategy:'''' not found in ''''{0}''''. Skipping.' -f $TargetFilePath^); return; }
     echo     $contentBefore = '';
-    echo     if ($lineNum -gt 0) { for ($j = 0; $j -lt $lineNum; $j++) { $contentBefore += $lines[$j]; } }
+    echo     if ^($lineNum -gt 0^) { for ^($j = 0; $j -lt $lineNum; $j++^) { $contentBefore += $lines[$j]; } }
     echo     $newFileContent = $contentBefore + $strategyContent
     echo     Set-Content -Path $TargetFilePath -Value $newFileContent -NoNewline -Encoding UTF8
-    echo     Write-Host ('Updated (Update Logic) ''{0}''.' -f $TargetFilePath)
-    echo   } catch { $actualErrorMessage = $_.Exception.Message; Write-Error ('Error processing file ''{0}'': {1}' -f $TargetFilePath, $actualErrorMessage); }
+    echo     Write-Host ^('Updated ^(Update Logic^) ''''{0}''''.' -f $TargetFilePath^)
+    echo   } catch { $actualErrorMessage = $_.Exception.Message; Write-Error ^('Error processing file ''''{0}'''': {1}^' -f $TargetFilePath, $actualErrorMessage^); }
     echo }
     echo function Process-Deletion {
-    echo   param ([string]$TargetFileName)
+    echo   param ^([string]$TargetFileName^)
     echo   $TargetFilePath = Join-Path $rooDir $TargetFileName
-    echo   if (-not (Test-Path -Path $TargetFilePath -PathType Leaf)) { Write-Warning ('Target file ''{0}'' not found. Skipping.' -f $TargetFilePath); return; }
-    echo   Write-Host ('Processing (Update Logic) {0} for deletion...' -f $TargetFilePath)
+    echo   if ^(-not ^(Test-Path -Path $TargetFilePath -PathType Leaf^)^) { Write-Warning ^('Target file ''''{0}'''' not found. Skipping.' -f $TargetFilePath^); return; }
+    echo   Write-Host ^('Processing ^(Update Logic^) {0} for deletion...' -f $TargetFilePath^)
     echo   try {
     echo     $fileContent = Get-Content -Path $TargetFilePath -Raw
-    echo     $lines = $fileContent -split '(\r?\n)'
+    echo     $lines = $fileContent -split '^^^(\r?\n^^^)'
     echo     $lineNum = -1
-    echo     for ($i = 0; $i -lt $lines.Length; $i++) { if ($lines[$i] -match '^memory_bank_strategy:') { $lineNum = $i; break; } }
-    echo     if ($lineNum -eq -1) { Write-Warning ('''memory_bank_strategy:'' not found in ''{0}''. Skipping.' -f $TargetFilePath); return; }
+    echo     for ^($i = 0; $i -lt $lines.Length; $i++^) { if ^($lines[$i] -match '^^memory_bank_strategy:'^) { $lineNum = $i; break; } }
+    echo     if ^($lineNum -eq -1^) { Write-Warning ^('''''memory_bank_strategy:'''' not found in ''''{0}''''. Skipping.' -f $TargetFilePath^); return; }
     echo     $contentBefore = '';
-    echo     if ($lineNum -gt 0) { for ($j = 0; $j -lt $lineNum; $j++) { $contentBefore += $lines[$j]; } }
+    echo     if ^($lineNum -gt 0^) { for ^($j = 0; $j -lt $lineNum; $j++^) { $contentBefore += $lines[$j]; } }
     echo     Set-Content -Path $TargetFilePath -Value $contentBefore -NoNewline -Encoding UTF8
-    echo     Write-Host ('Updated (Update Logic) ''{0}'' (section deleted).' -f $TargetFilePath)
-    echo   } catch { $actualErrorMessage = $_.Exception.Message; Write-Error ('Error processing file ''{0}'': {1}' -f $TargetFilePath, $actualErrorMessage); }
+    echo     Write-Host ^('Updated ^(Update Logic^) ''''{0}'''' ^(section deleted^).' -f $TargetFilePath^)
+    echo   } catch { $actualErrorMessage = $_.Exception.Message; Write-Error ^('Error processing file ''''{0}'''': {1}^' -f $TargetFilePath, $actualErrorMessage^); }
     echo }
     echo Process-Replacement -TargetFileName $architectPrompt
     echo Process-Replacement -TargetFileName $codePrompt
