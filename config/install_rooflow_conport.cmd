@@ -76,13 +76,13 @@ if %COPY_ERROR% equ 0 (
     )
 )
 if %COPY_ERROR% equ 0 (
-    echo Copying dev/update_roo_prompts.ps1...
-    copy /Y "%TEMP_CLONE_DIR%\dev\update_roo_prompts.ps1" "%CD%\update_roo_prompts_temp.ps1"
+    echo Copying config/update_roo_prompts.ps1...
+    copy /Y "%TEMP_CLONE_DIR%\config\update_roo_prompts.ps1" "%CD%\update_roo_prompts_temp.ps1"
     if errorlevel 1 (
-        echo   ERROR: Failed to copy dev/update_roo_prompts.ps1.
+        echo   ERROR: Failed to copy config/update_roo_prompts.ps1.
         set "COPY_ERROR=1"
     ) else (
-        echo   Copied dev/update_roo_prompts.ps1 as update_roo_prompts_temp.ps1.
+        echo   Copied config/update_roo_prompts.ps1 as update_roo_prompts_temp.ps1.
     )
 )
 
