@@ -115,33 +115,70 @@ if %errorlevel% neq 0 (
 
 :: --- EMBEDDED PROMPT UPDATE LOGIC (via PowerShell inline) ---
 echo --- Starting Roo prompt update with ConPort strategy (using PowerShell) ---
+set "TEMP_PS1_SCRIPT=%TEMP%\RooUpdatePrompts_%RANDOM%.ps1"
 
-set "PS_SCRIPT_CONTENT="
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% $ErrorActionPreference = 'Stop'; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% $currentDir = Get-Location; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% $rooDir = Join-Path $currentDir '.roo'; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% $strategyFile = Join-Path $currentDir 'roo_code_conport_strategy'; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% $architectPrompt = 'system-prompt-flow-architect'; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% $askPrompt = 'system-prompt-flow-ask'; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% $codePrompt = 'system-prompt-flow-code'; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% $debugPrompt = 'system-prompt-flow-debug'; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% if (-not (Test-Path -Path $rooDir -PathType Container)) { Write-Error ^('Error (Update Logic): Directory ''''{0}'''' not found.' -f $rooDir^); exit 1; } "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% if (-not (Test-Path -Path $strategyFile -PathType Leaf)) { Write-Error ^('Error (Update Logic): Strategy file ''''{0}'''' not found.' -f $strategyFile^); exit 1; } "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% try { $strategyContent = Get-Content -Path $strategyFile -Raw } catch { $actualErrorMessage = $($_.Exception.Message^); Write-Error ^('Error reading strategy file ''''{0}'''': {1}^' -f $strategyFile, $actualErrorMessage^); exit 1; } "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% function Process-Replacement { param ([string]$TargetFileName) $TargetFilePath = Join-Path $rooDir $TargetFileName; if (-not (Test-Path -Path $TargetFilePath -PathType Leaf)) { Write-Warning ^('Target file ''''{0}'''' not found. Skipping.' -f $TargetFilePath^); return; } Write-Host ^('Processing (Update Logic) {0} for replacement...' -f $TargetFilePath^); try { $fileContent = Get-Content -Path $TargetFilePath -Raw; $lines = $fileContent -split '(\r?\n)'; $lineNum = -1; for ($i = 0; $i -lt $lines.Length; $i++) { if ($lines[$i] -match '^memory_bank_strategy:') { $lineNum = $i; break; } } if ($lineNum -eq -1) { Write-Warning ^('''''memory_bank_strategy:'''' not found in ''''{0}''''. Skipping.' -f $TargetFilePath^); return; } $contentBefore = ''; if ($lineNum -gt 0) { for ($j = 0; $j -lt $lineNum; $j++) { $contentBefore += $lines[$j]; } } $newFileContent = $contentBefore + $strategyContent; Set-Content -Path $TargetFilePath -Value $newFileContent -NoNewline -Encoding UTF8; Write-Host ^('Updated (Update Logic) ''''{0}''''.' -f $TargetFilePath^); } catch { $actualErrorMessage = $($_.Exception.Message^); Write-Error ^('Error processing file ''''{0}'''': {1}^' -f $TargetFilePath, $actualErrorMessage^); } } "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% function Process-Deletion { param ([string]$TargetFileName) $TargetFilePath = Join-Path $rooDir $TargetFileName; if (-not (Test-Path -Path $TargetFilePath -PathType Leaf)) { Write-Warning ^('Target file ''''{0}'''' not found. Skipping.' -f $TargetFilePath^); return; } Write-Host ^('Processing (Update Logic) {0} for deletion...' -f $TargetFilePath^); try { $fileContent = Get-Content -Path $TargetFilePath -Raw; $lines = $fileContent -split '(\r?\n)'; $lineNum = -1; for ($i = 0; $i -lt $lines.Length; $i++) { if ($lines[$i] -match '^memory_bank_strategy:') { $lineNum = $i; break; } } if ($lineNum -eq -1) { Write-Warning ^('''''memory_bank_strategy:'''' not found in ''''{0}''''. Skipping.' -f $TargetFilePath^); return; } $contentBefore = ''; if ($lineNum -gt 0) { for ($j = 0; $j -lt $lineNum; $j++) { $contentBefore += $lines[$j]; } } Set-Content -Path $TargetFilePath -Value $contentBefore -NoNewline -Encoding UTF8; Write-Host ^('Updated (Update Logic) ''''{0}'''' (section deleted).' -f $TargetFilePath^); } catch { $actualErrorMessage = $($_.Exception.Message^); Write-Error ^('Error processing file ''''{0}'''': {1}^' -f $TargetFilePath, $actualErrorMessage^); } } "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% Process-Replacement -TargetFileName $architectPrompt; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% Process-Replacement -TargetFileName $codePrompt; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% Process-Replacement -TargetFileName $debugPrompt; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% Process-Deletion -TargetFileName $askPrompt; "
-set "PS_SCRIPT_CONTENT=%PS_SCRIPT_CONTENT% Write-Host '--- Roo prompt update with ConPort strategy completed (PowerShell) ---'; "
+(
+    echo $ErrorActionPreference = 'Stop';
+    echo $currentDir = Get-Location;
+    echo $rooDir = Join-Path $currentDir '.roo';
+    echo $strategyFile = Join-Path $currentDir 'roo_code_conport_strategy';
+    echo $architectPrompt = 'system-prompt-flow-architect';
+    echo $askPrompt = 'system-prompt-flow-ask';
+    echo $codePrompt = 'system-prompt-flow-code';
+    echo $debugPrompt = 'system-prompt-flow-debug';
+    echo if (-not (Test-Path -Path $rooDir -PathType Container)) { Write-Error ('Error (Update Logic): Directory ''{0}'' not found.' -f $rooDir); exit 1; }
+    echo if (-not (Test-Path -Path $strategyFile -PathType Leaf)) { Write-Error ('Error (Update Logic): Strategy file ''{0}'' not found.' -f $strategyFile); exit 1; }
+    echo try { $strategyContent = Get-Content -Path $strategyFile -Raw } catch { $actualErrorMessage = $_.Exception.Message; Write-Error ('Error reading strategy file ''{0}'': {1}' -f $strategyFile, $actualErrorMessage); exit 1; }
+    echo function Process-Replacement {
+    echo   param ([string]$TargetFileName)
+    echo   $TargetFilePath = Join-Path $rooDir $TargetFileName
+    echo   if (-not (Test-Path -Path $TargetFilePath -PathType Leaf)) { Write-Warning ('Target file ''{0}'' not found. Skipping.' -f $TargetFilePath); return; }
+    echo   Write-Host ('Processing (Update Logic) {0} for replacement...' -f $TargetFilePath)
+    echo   try {
+    echo     $fileContent = Get-Content -Path $TargetFilePath -Raw
+    echo     $lines = $fileContent -split '(\r?\n)'
+    echo     $lineNum = -1
+    echo     for ($i = 0; $i -lt $lines.Length; $i++) { if ($lines[$i] -match '^memory_bank_strategy:') { $lineNum = $i; break; } }
+    echo     if ($lineNum -eq -1) { Write-Warning ('''memory_bank_strategy:'' not found in ''{0}''. Skipping.' -f $TargetFilePath); return; }
+    echo     $contentBefore = '';
+    echo     if ($lineNum -gt 0) { for ($j = 0; $j -lt $lineNum; $j++) { $contentBefore += $lines[$j]; } }
+    echo     $newFileContent = $contentBefore + $strategyContent
+    echo     Set-Content -Path $TargetFilePath -Value $newFileContent -NoNewline -Encoding UTF8
+    echo     Write-Host ('Updated (Update Logic) ''{0}''.' -f $TargetFilePath)
+    echo   } catch { $actualErrorMessage = $_.Exception.Message; Write-Error ('Error processing file ''{0}'': {1}' -f $TargetFilePath, $actualErrorMessage); }
+    echo }
+    echo function Process-Deletion {
+    echo   param ([string]$TargetFileName)
+    echo   $TargetFilePath = Join-Path $rooDir $TargetFileName
+    echo   if (-not (Test-Path -Path $TargetFilePath -PathType Leaf)) { Write-Warning ('Target file ''{0}'' not found. Skipping.' -f $TargetFilePath); return; }
+    echo   Write-Host ('Processing (Update Logic) {0} for deletion...' -f $TargetFilePath)
+    echo   try {
+    echo     $fileContent = Get-Content -Path $TargetFilePath -Raw
+    echo     $lines = $fileContent -split '(\r?\n)'
+    echo     $lineNum = -1
+    echo     for ($i = 0; $i -lt $lines.Length; $i++) { if ($lines[$i] -match '^memory_bank_strategy:') { $lineNum = $i; break; } }
+    echo     if ($lineNum -eq -1) { Write-Warning ('''memory_bank_strategy:'' not found in ''{0}''. Skipping.' -f $TargetFilePath); return; }
+    echo     $contentBefore = '';
+    echo     if ($lineNum -gt 0) { for ($j = 0; $j -lt $lineNum; $j++) { $contentBefore += $lines[$j]; } }
+    echo     Set-Content -Path $TargetFilePath -Value $contentBefore -NoNewline -Encoding UTF8
+    echo     Write-Host ('Updated (Update Logic) ''{0}'' (section deleted).' -f $TargetFilePath)
+    echo   } catch { $actualErrorMessage = $_.Exception.Message; Write-Error ('Error processing file ''{0}'': {1}' -f $TargetFilePath, $actualErrorMessage); }
+    echo }
+    echo Process-Replacement -TargetFileName $architectPrompt
+    echo Process-Replacement -TargetFileName $codePrompt
+    echo Process-Replacement -TargetFileName $debugPrompt
+    echo Process-Deletion -TargetFileName $askPrompt
+    echo Write-Host '--- Roo prompt update with ConPort strategy completed (PowerShell) ---'
+) > "%TEMP_PS1_SCRIPT%"
 
-powershell -NoProfile -ExecutionPolicy Bypass -Command "%PS_SCRIPT_CONTENT%"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%TEMP_PS1_SCRIPT%"
 if %errorlevel% neq 0 (
     echo Error: PowerShell script for prompt updates failed.
+    if exist "%TEMP_PS1_SCRIPT%" del "%TEMP_PS1_SCRIPT%" >nul 2>nul
     if exist "%TEMP_CLONE_DIR%" rmdir /s /q "%TEMP_CLONE_DIR%" >nul 2>nul
     exit /b 1
 )
+if exist "%TEMP_PS1_SCRIPT%" del "%TEMP_PS1_SCRIPT%" >nul 2>nul
 :: --- END EMBEDDED PROMPT UPDATE LOGIC ---
 
 :: Clean up the strategy file from the workspace root
