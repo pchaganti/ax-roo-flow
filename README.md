@@ -4,6 +4,10 @@
 
 **RooFlow provides an *experimental* set of modes and system prompts designed as an alternative way to interact with the [Roo Code](https://github.com/RooVetGit/Roo-Code) VS Code extension.** It uses YAML-based system prompts aiming for improved efficiency and token usage compared to the standard Markdown prompts. RooFlow is NOT officially endorsed or supported by the Roo Code project. Use with caution.
 
+### ✨Now with optional installation for use with the new [Context Portal MCP](https://github.com/GreatScottyMac/context-portal)!!✨
+
+<br>
+
 # RooFlow 
 <img src="https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/images/rooflow_logo.png" alt="RooFlow Logo" width="300"/>
 
@@ -102,26 +106,47 @@ graph LR
    3.  **Open your terminal** and navigate (`cd`) to your project's **root directory**.
    4.  **Run the appropriate command** for your operating system directly:
        *   **Windows (Command Prompt or PowerShell):**
-           1. Download the script:
+           1. Download the script
+
+              **For Use With File Based Memory Bank:**
               ```cmd
               curl -L -o install_rooflow.cmd https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.cmd
               ```
+              **For Use With [Context Portal MCP](https://github.com/GreatScottyMac/context-portal):**
+              ```cmd
+              curl -L -o install_rooflow_conport.cmd https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow_conport.cmd
+              ```
            2. Execute the downloaded script (⚠️If you have MCP servers connected, see [Importing Connected MCP Server Tools](https://github.com/GreatScottyMac/RooFlow?tab=readme-ov-file#importing-connected-mcp-server-tools-optional) prior to installation):
               ```cmd
-              .\install_rooflow.cmd
+                  (Memory Bank)     or      (Context Portal MCP)
+              .\install_rooflow.cmd    .\install_rooflow_conport.cmd
               ```
        *   **Linux / macOS (bash/zsh):**
-           1. Download the script:
-              ```bash
-              curl -L -o install_rooflow.sh https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.sh
+           1. Download the script
+
+              **For Use With File Based Memory Bank:**
+              ```cmd
+              curl -L -o install_rooflow.cmd https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.sh
+              ```
+              **For Use With [Context Portal MCP](https://github.com/GreatScottyMac/context-portal):**
+              ```cmd
+              curl -L -o install_rooflow_conport.cmd https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow_conport.sh
               ```
            2. Make the script executable:
               ```bash
               chmod +x install_rooflow.sh
+
+              or  
+
+              chmod +x install_rooflow_conport.sh
               ```
            3. Execute the downloaded script (⚠️If you have MCP servers connected, see [Importing Connected MCP Server Tools](https://github.com/GreatScottyMac/RooFlow?tab=readme-ov-file#importing-connected-mcp-server-tools-optional) prior to installation):
               ```bash
               ./install_rooflow.sh
+
+              or 
+
+              ./install_rooflow_conport.sh
               ```
    5.  The command downloads and executes the script, which will check for prerequisites (`git`, `python3`/`python`, `pyyaml`), clone the repository, copy necessary files (including `generate_mcp_yaml.py`), clean up the clone, and run the Python script to process templates. Follow any on-screen prompts or error messages.
    6.  **Note:** The installer script (`install_rooflow.*`) is designed to remain after execution for potential re-runs (e.g., for updates).
