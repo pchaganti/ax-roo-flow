@@ -17,6 +17,9 @@ config-old/
 system_prompt.md
 build/*
 dist/
+*.log
+.rooignore
+.context_portal/
 
 generate_mcp_yaml.py
 
