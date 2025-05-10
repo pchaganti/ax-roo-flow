@@ -144,6 +144,12 @@ if %errorlevel% neq 0 (
 )
 :: --- END EMBEDDED PROMPT UPDATE LOGIC ---
 
+:: Clean up the strategy file from the workspace root
+if exist "%CD%\roo_code_conport_strategy" (
+    echo Cleaning up roo_code_conport_strategy from workspace root...
+    del /F /Q "%CD%\roo_code_conport_strategy" >nul 2>nul
+)
+
 :: --- MODIFIED CLEANUP SECTION START ---
 echo Cleaning up temporary clone directory...
 if exist "%TEMP_CLONE_DIR%" (

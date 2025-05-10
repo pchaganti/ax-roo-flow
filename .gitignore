@@ -24,3 +24,4 @@ dist/
 generate_mcp_yaml.py
 
 install_rooflow.sh
+install_rooflow_conport.sh

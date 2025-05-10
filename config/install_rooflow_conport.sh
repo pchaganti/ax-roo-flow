@@ -167,6 +167,12 @@ process_deletion "$UPD_ROO_DIR/$UPD_ASK_PROMPT"
 echo "--- Roo prompt update with ConPort strategy completed ---"
 # --- END EMBEDDED PROMPT UPDATE LOGIC ---
 
+# Clean up the strategy file from the workspace root
+if [ -f "$UPD_STRATEGY_FILE" ]; then
+  echo "Cleaning up $UPD_STRATEGY_FILE from workspace root..."
+  rm -f "$UPD_STRATEGY_FILE"
+fi
+
 # --- MODIFIED CLEANUP SECTION START ---
 echo "Cleaning up temporary clone directory ($CLONE_DIR)..."
 rm -rf "$CLONE_DIR" # Remove the cloned repo directory
