@@ -110,11 +110,11 @@ graph LR
 
               **For Use With File Based Memory Bank:**
               ```cmd
-              curl -L -o install_rooflow.cmd https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.cmd
+              curl -L -o install_rooflow.cmd https://github.com/GreatScottyMac/RooFlow/blob/main/config/install_rooflow.cmd
               ```
               **For Use With [Context Portal MCP](https://github.com/GreatScottyMac/context-portal):**
               ```cmd
-              curl -L -o install_rooflow_conport.cmd https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow_conport.cmd
+              curl -L -o install_rooflow_conport.cmd https://github.com/GreatScottyMac/RooFlow/blob/main/config/install_rooflow_conport.cmd
               ```
            2. Execute the downloaded script (⚠️If you have MCP servers connected, see [Importing Connected MCP Server Tools](https://github.com/GreatScottyMac/RooFlow?tab=readme-ov-file#importing-connected-mcp-server-tools-optional) prior to installation):
               ```cmd
