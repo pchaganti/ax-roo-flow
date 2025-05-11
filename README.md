@@ -110,11 +110,11 @@ graph LR
 
               **For Use With File Based Memory Bank:**
               ```cmd
-              curl -L -o install_rooflow.cmd https://github.com/GreatScottyMac/RooFlow/main/config/install_rooflow.cmd
+              curl -O https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.cmd
               ```
               **For Use With [Context Portal MCP](https://github.com/GreatScottyMac/context-portal):**
               ```cmd
-              curl -L -o install_rooflow_conport.cmd https://github.com/GreatScottyMac/RooFlow/main/config/install_rooflow_conport.cmd
+              curl -O https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow_conport.cmd
               ```
            2. Execute the downloaded script (⚠️If you have MCP servers connected, see [Importing Connected MCP Server Tools](https://github.com/GreatScottyMac/RooFlow?tab=readme-ov-file#importing-connected-mcp-server-tools-optional) prior to installation):
               ```cmd
@@ -126,11 +126,11 @@ graph LR
 
               **For Use With File Based Memory Bank:**
               ```cmd
-              curl -L -o install_rooflow.sh https://github.com/GreatScottyMac/RooFlow/main/config/install_rooflow.sh
+              curl -O https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow.sh
               ```
               **For Use With [Context Portal MCP](https://github.com/GreatScottyMac/context-portal):**
               ```cmd
-              curl -L -o install_rooflow_conport.sh https://github.com/GreatScottyMac/RooFlow/main/config/install_rooflow_conport.sh
+              curl -O https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow_conport.sh
               ```
            2. Make the script executable:
               ```bash
