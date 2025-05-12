@@ -117,9 +117,12 @@ graph LR
               curl -O https://raw.githubusercontent.com/GreatScottyMac/RooFlow/main/config/install_rooflow_conport.cmd
               ```
            2. Execute the downloaded script (⚠️If you have MCP servers connected, see [Importing Connected MCP Server Tools](https://github.com/GreatScottyMac/RooFlow?tab=readme-ov-file#importing-connected-mcp-server-tools-optional) prior to installation):
-              ```cmd
-                  (Memory Bank)     or      (Context Portal MCP)
-              .\install_rooflow.cmd    .\install_rooflow_conport.cmd
+              ```bash
+              ./install_rooflow.cmd
+              ```
+              or 
+              ```bash
+              ./install_rooflow_conport.cmd
               ```
        *   **Linux / macOS (bash/zsh):**
            1. Download the script
@@ -135,17 +138,17 @@ graph LR
            2. Make the script executable:
               ```bash
               chmod +x install_rooflow.sh
-
+              ```
               or  
-
+              ```bash
               chmod +x install_rooflow_conport.sh
               ```
            3. Execute the downloaded script (⚠️If you have MCP servers connected, see [Importing Connected MCP Server Tools](https://github.com/GreatScottyMac/RooFlow?tab=readme-ov-file#importing-connected-mcp-server-tools-optional) prior to installation):
               ```bash
               ./install_rooflow.sh
-
+              ```
               or 
-
+              ```bash
               ./install_rooflow_conport.sh
               ```
    5.  The command downloads and executes the script, which will check for prerequisites (`git`, `python3`/`python`, `pyyaml`), clone the repository, copy necessary files (including `generate_mcp_yaml.py`), clean up the clone, and run the Python script to process templates. Follow any on-screen prompts or error messages.
