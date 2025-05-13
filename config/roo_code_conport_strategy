@@ -12,12 +12,7 @@ conport_memory_strategy:
 
   initialization:
     thinking_preamble: |
-      - **CONPORT INITIALIZATION AND CONTEXT LOADING:**
-      - 1. Determine `ACTUAL_WORKSPACE_ID` (as per workspace_id_source).
-      - 2. **Check for Existing Database:**
-      -    Use `list_files` tool with `path: ACTUAL_WORKSPACE_ID + "/context_portal/"`.
-      -    Examine result for `context.db`.
-      - 3. **Branch based on DB Existence:**
+
     agent_action_plan:
       - step: 1
         action: "Determine `ACTUAL_WORKSPACE_ID`."
@@ -35,8 +30,7 @@ conport_memory_strategy:
 
   load_existing_conport_context:
     thinking_preamble: |
-      - Existing ConPort database found. Attempting to load initial contexts.
-      - Will check if loaded context appears empty (which might indicate a reset or issue).
+
     agent_action_plan:
       - step: 1
         description: "Attempt to load initial contexts from ConPort."
@@ -69,7 +63,7 @@ conport_memory_strategy:
 
   handle_new_conport_setup:
     thinking_preamble: |
-      - No existing ConPort database found. Will ask the user about creating one.
+
     agent_action_plan:
       - step: 1
         action: "Inform user: \"No existing ConPort database found at `ACTUAL_WORKSPACE_ID + \"/context_portal/context.db\"`.\""
@@ -89,8 +83,7 @@ conport_memory_strategy:
               - "Inform user: \"Okay, a new ConPort database will be created.\""
               - description: "Attempt to bootstrap Product Context from projectBrief.md (this happens only on new setup)."
                 thinking_preamble: |
-                  - Need `ACTUAL_WORKSPACE_ID`.
-                  - Will check for projectBrief.md and offer import.
+
                 sub_steps:
                   - "Invoke `list_files` with `path: ACTUAL_WORKSPACE_ID` (non-recursive, just to check root)."
                   - description: "Analyze `list_files` result for 'projectBrief.md'."
@@ -129,10 +122,7 @@ conport_memory_strategy:
 
   if_conport_unavailable_or_init_failed:
     thinking_preamble: |
-      - Initial ConPort tool calls failed, server seems unavailable, or user chose not to initialize.
-      - I will inform the user that ConPort could not be initialized/used for context management.
-      - I will set my status to [CONPORT_INACTIVE].
-      - I will proceed with the user's task using only information directly available or from other tools.
+
     agent_action: "Inform user: \"ConPort memory will not be used for this session. Status: [CONPORT_INACTIVE].\""
 
   general:
