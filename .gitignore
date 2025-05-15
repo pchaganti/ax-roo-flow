@@ -19,7 +19,7 @@ build/*
 dist/
 *.log
 .rooignore
-.context_portal/
+context_portal/
 
 generate_mcp_yaml.py
 
