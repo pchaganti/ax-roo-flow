@@ -80,11 +80,11 @@ def parse_mcp_servers_md(markdown_content: str) -> list:
         tools_section_match = re.search(r'### Available Tools\s*(.*?)(?:### Direct Resources|\Z)', server_block_content, re.DOTALL | re.IGNORECASE)
         if tools_section_match:
             tools_content = tools_section_match.group(1).strip()
-            tool_blocks = re.split(r'\n\s*-\s+(?=[\w_]+:)', '\n' + tools_content)
+            tool_blocks = re.split(r'\n\s*-\s+(?=[\w_-]+:)', '\n' + tools_content)
             for block in tool_blocks:
                 block = block.strip()
                 if not block: continue
-                name_match = re.match(r'^-?\s*([\w_]+):', block)
+                name_match = re.match(r'^-?\s*([\w_-]+):', block)
                 if not name_match: continue
                 tool_name = name_match.group(1)
                 block_after_name = re.sub(r'^-?\s*' + re.escape(tool_name) + r':\s*', '', block, count=1).strip()
