@@ -210,7 +210,7 @@ graph LR
 
    ### 4. Updating RooFlow
 
-   #### Simply run the install script and it will overwrite your existing .roo/ directory and .roomodes file.
+   #### Simply run the install script and it will overwrite your existing .roo/ directory and .roomodes file. If you have your own additional custom modes in .roomodes, rename that file before running the update and then replace the contents of the newly installed .roomodes with the content from your custom file.
 
 <br/>
 
