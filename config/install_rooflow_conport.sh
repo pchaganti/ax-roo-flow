@@ -92,6 +92,7 @@ UPD_ARCHITECT_PROMPT="system-prompt-flow-architect"
 UPD_ASK_PROMPT="system-prompt-flow-ask"
 UPD_CODE_PROMPT="system-prompt-flow-code"
 UPD_DEBUG_PROMPT="system-prompt-flow-debug"
+UPD_ORCHESTRATOR_PROMPT="system-prompt-flow-orchestrator"
 
 # Error check for update logic's required files
 if [ ! -d "$UPD_ROO_DIR" ]; then
@@ -163,6 +164,7 @@ process_replacement "$UPD_ROO_DIR/$UPD_ARCHITECT_PROMPT"
 process_replacement "$UPD_ROO_DIR/$UPD_CODE_PROMPT"
 process_replacement "$UPD_ROO_DIR/$UPD_DEBUG_PROMPT"
 process_deletion "$UPD_ROO_DIR/$UPD_ASK_PROMPT"
+process_replacement "$UPD_ROO_DIR/$UPD_ORCHESTRATOR_PROMPT"
 
 echo "--- Roo prompt update with ConPort strategy completed ---"
 # --- END EMBEDDED PROMPT UPDATE LOGIC ---
