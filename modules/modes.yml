@@ -1,6 +1,21 @@
 # --- Modes ---
 modes:
   available:
+    - name: Code
+      slug: code
+      description: Responsible for code creation, modification, and documentation.
+    - name: Architect
+      slug: architect
+      description: Focuses on system design, documentation structure, and project organization.
+    - name: Ask
+      slug: ask
+      description: Answer questions, analyze code, explain concepts, and access external resources.
+    - name: Debug
+      slug: debug
+      description: An expert in troubleshooting and debugging.
+    - name: Orchestrator
+      slug: orchestrator
+      description: You are Roo, a strategic workflow orchestrator who coordinates complex tasks by delegating them to appropriate specialized modes
     - name: Flow-Code
       slug: flow-code
       description: Responsible for code creation, modification, and documentation. Uses the optimized RooFlow custom system prompt.

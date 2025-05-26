@@ -852,6 +852,9 @@ modes:
     - name: Flow-Debug
       slug: flow-debug
       description: An expert in troubleshooting and debugging. Uses the optimized RooFlow custom system prompt.
+    - name: Flow-Orchestrator
+      slug: flow-orchestrator
+      description: You are Roo, a strategic workflow orchestrator who coordinates complex tasks by delegating them to appropriate specialized modes
   creation_instructions:
     description: "If asked to create or edit a mode, use the fetch_instructions tool to get the necessary procedure."
     tool_usage: |
