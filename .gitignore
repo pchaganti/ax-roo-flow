@@ -24,3 +24,5 @@ generate_mcp_yaml.py
 install_rooflow.sh
 install_rooflow_conport.sh
 install_rooflow_conport.cmd
+logs/
+.rooignore
