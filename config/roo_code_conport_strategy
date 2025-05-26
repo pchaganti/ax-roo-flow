@@ -4,6 +4,7 @@ conport_memory_strategy:
 
   initialization:
     thinking_preamble: |
+
     agent_action_plan:
       - step: 1
         action: "Determine `ACTUAL_WORKSPACE_ID`."
@@ -278,7 +279,7 @@ conport_memory_strategy:
         - "Identify and log new relationships between items (use `link_conport_items`)."
         - "If many items of the same type were discussed, consider `batch_log_items`."
         - "After updates, consider a brief `get_recent_activity_summary` to confirm and refresh understanding."
-    post_umb_actions:
+    post_sync_actions:
       - "Inform user: ConPort synchronized with session info."
       - "Resume previous task or await new instructions."
 
