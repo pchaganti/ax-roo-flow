@@ -9,6 +9,7 @@ $architectPrompt = "system-prompt-flow-architect"
 $askPrompt = "system-prompt-flow-ask"
 $codePrompt = "system-prompt-flow-code"
 $debugPrompt = "system-prompt-flow-debug"
+$orchestratorPrompt = "system-prompt-flow-orchestrator"
 
 # --- Error Handling ---
 if (-not (Test-Path -Path $rooDir -PathType Container)) {
@@ -150,6 +151,7 @@ Write-Host "Starting Roo prompt update process..."
 Process-Replacement -TargetFilePath (Join-Path $rooDir $architectPrompt)
 Process-Replacement -TargetFilePath (Join-Path $rooDir $codePrompt)
 Process-Replacement -TargetFilePath (Join-Path $rooDir $debugPrompt)
+Process-Replacement -TargetFilePath (Join-Path $rooDir $orchestratorPrompt)
 
 # Process file for deletion
 Process-Deletion -TargetFilePath (Join-Path $rooDir $askPrompt)
