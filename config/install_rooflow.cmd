@@ -116,10 +116,17 @@ if not exist "%CD%\generate_mcp_yaml.py" (
 :: Run the Python script to process templates
 echo Running Python script to process templates...
 :: Get OS/Shell/Home/Workspace variables defined earlier
-for /f "tokens=*" %%a in ('powershell -NoProfile -Command "(Get-CimInstance Win32_OperatingSystem).Caption"') do set "OS_VAL=%%a"
+for /f "tokens=*" %%a in ('powershell -NoProfile -Command "(Get-CimInstance Win32_OperatingSystem).Caption | ForEach-Object Trim"') do set "OS_VAL=%%a"
 set "SHELL_VAL=cmd"
 set "HOME_VAL=%USERPROFILE%"
 set "WORKSPACE_VAL=%CD%"
+
+echo Debugging variables before Python script call:
+echo OS_VAL: "%OS_VAL%"
+echo SHELL_VAL: "%SHELL_VAL%"
+echo HOME_VAL: "%HOME_VAL%"
+echo WORKSPACE_VAL: "%WORKSPACE_VAL%"
+echo.
 
 :: Ensure quotes around arguments, especially paths
 python generate_mcp_yaml.py --os "%OS_VAL%" --shell "%SHELL_VAL%" --home "%HOME_VAL%" --workspace "%WORKSPACE_VAL%"

@@ -84,10 +84,24 @@ fi
 # Run the Python script to process templates
 echo "Running Python script to process templates..."
 # Get OS/Shell/Home/Workspace variables defined earlier
-if [[ "$(uname)" == "Darwin" ]]; then OS_VAL="macOS $(sw_vers -productVersion)"; else OS_VAL=$(uname -s -r); fi
+OS_VAL=$(uname -s) # Get OS name (e.g., Linux, Darwin)
+if [[ "$OS_VAL" == "Darwin" ]]; then
+    OS_VAL="macOS $(sw_vers -productVersion)" # For macOS, get detailed version
+elif [[ "$OS_VAL" == "Linux" ]]; then
+    OS_VAL="Linux $(uname -r)" # For Linux, get kernel release
+else
+    OS_VAL=$(uname -s -r) # Fallback for other Unix-like systems
+fi
 SHELL_VAL="bash"
-HOME_VAL=$(echo "$HOME")
-WORKSPACE_VAL=$(pwd)
+HOME_VAL="$HOME"
+WORKSPACE_VAL="$(pwd)"
+
+echo "Debugging variables before Python script call:"
+echo "OS_VAL: \"$OS_VAL\""
+echo "SHELL_VAL: \"$SHELL_VAL\""
+echo "HOME_VAL: \"$HOME_VAL\""
+echo "WORKSPACE_VAL: \"$WORKSPACE_VAL\""
+echo ""
 
 python3 generate_mcp_yaml.py --os "$OS_VAL" --shell "$SHELL_VAL" --home "$HOME_VAL" --workspace "$WORKSPACE_VAL"
 # Removed deletion of insert-variables.sh
