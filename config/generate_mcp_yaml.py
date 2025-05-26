@@ -156,9 +156,14 @@ def process_target_file(file_path: str, args: argparse.Namespace, mcp_yaml_conte
         # 1. Basic Placeholders (Match bracketed format used in templates)
         content = content.replace("[OS_PLACEHOLDER]", args.os or "Unknown OS")
         content = content.replace("[SHELL_PLACEHOLDER]", args.shell or "Unknown Shell")
-        # Use arguments directly for replacement
-        content = content.replace("[HOME_PLACEHOLDER]", args.home or 'Unknown Home')
-        content = content.replace("[WORKSPACE_PLACEHOLDER]", args.workspace or 'Unknown Workspace')
+        
+        # Ensure paths are YAML-safe by quoting them. Single quotes are generally preferred for paths.
+        # Escape single quotes within the path by doubling them.
+        home_path_safe = f"'{args.home.replace("'", "''")}'" if args.home else "'Unknown Home'"
+        workspace_path_safe = f"'{args.workspace.replace("'", "''")}'" if args.workspace else "'Unknown Workspace'"
+
+        content = content.replace("[HOME_PLACEHOLDER]", home_path_safe)
+        content = content.replace("[WORKSPACE_PLACEHOLDER]", workspace_path_safe)
 
         # 2. MCP Block Injection/Overwrite
         placeholder_pattern = r'#\s*\[CONNECTED_MCP_SERVERS\]' # Python regex
