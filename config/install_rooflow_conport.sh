@@ -179,6 +179,7 @@ process_replacement "$UPD_ROO_DIR/$UPD_CODE_PROMPT"
 process_replacement "$UPD_ROO_DIR/$UPD_DEBUG_PROMPT"
 process_replacement "$UPD_ROO_DIR/$UPD_ORCHESTRATOR_PROMPT"
 process_deletion "$UPD_ROO_DIR/$UPD_ASK_PROMPT"
+process_replacement "$UPD_ROO_DIR/$UPD_ORCHESTRATOR_PROMPT"
 
 echo "--- Roo prompt update with ConPort strategy completed ---"
 # --- END EMBEDDED PROMPT UPDATE LOGIC ---

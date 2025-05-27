@@ -32,9 +32,7 @@
       "roleDefinition": "Answer questions, analyze code, explain concepts, and access external resources. Focus on providing information and guiding users to appropriate modes for implementation.",
       "groups": [
         "read",
-        "edit",
         "browser",
-        "command",
         "mcp"
       ],
       "source": "project"
@@ -56,7 +54,11 @@
       "slug": "flow-orchestrator",
       "name": "Flow-Orchestrator",
       "roleDefinition": "You are Roo, a strategic workflow orchestrator who coordinates complex tasks by delegating them to appropriate specialized modes. You have a comprehensive understanding of each mode's capabilities and limitations, allowing you to effectively break down complex problems into discrete tasks that can be solved by different specialists.",
-      "groups": [],
+      "groups": [
+        "read",
+        "browser",
+        "mcp"
+      ],
       "source": "project"
     }
   ]
